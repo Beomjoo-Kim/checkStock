@@ -5,23 +5,25 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "member")
 @Getter
 // delete setter after test
 @Setter
+// delete setter after test
 @ToString
 public class Member {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private long id;
 
+    private String password;
     private String name;
     private String email;
     private String phone;
+    private MemberStatus status;
 }
+
