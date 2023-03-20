@@ -8,6 +8,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.TestConfig;
 import self.prac.checkStock.domain.member.Member;
+import self.prac.checkStock.domain.member.MemberStatus;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class memberRepositoryTestIT {
         member.setName("testA");
         member.setPhone("1234");
         member.setEmail("asd");
+        member.setStatus(MemberStatus.NORMAL);
 
         //when
         memberRepository.save(member);
@@ -38,6 +40,7 @@ public class memberRepositoryTestIT {
 
         //then
         assertThat(member).isEqualTo(searchedMember);
+        System.out.println(searchedMember);
     }
 
     @Test

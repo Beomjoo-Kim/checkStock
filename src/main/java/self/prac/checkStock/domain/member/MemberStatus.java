@@ -2,9 +2,9 @@ package self.prac.checkStock.domain.member;
 
 public enum MemberStatus {
 
-    NORMAL("USC001"),
-    BANNED("USC002"),
-    WITHDRAW("USC003");
+    NORMAL("USC001"),       //정상
+    BANNED("USC002"),       //추방
+    WITHDRAW("USC003");     //탈퇴
 
     private String code;
 
@@ -13,7 +13,7 @@ public enum MemberStatus {
     }
 
     public String getCode() {
-        return this.code;
+        return code;
     }
 
 }
