@@ -1,6 +1,5 @@
 package self.prac.checkStock.domain.member;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,6 +23,7 @@ public class Member {
     private String name;
     private String email;
     private String phone;
+    @Convert(converter = MemberStatusConverter.class)
     private MemberStatus status;
 }
 

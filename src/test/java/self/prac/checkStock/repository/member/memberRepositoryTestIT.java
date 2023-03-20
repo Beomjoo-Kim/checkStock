@@ -24,14 +24,14 @@ public class memberRepositoryTestIT {
 
     @Test
     @Transactional
-    @Rollback
+    @Rollback(value = false)
     public void save() {
         //given
         Member member = new Member();
         member.setName("testA");
         member.setPhone("1234");
         member.setEmail("asd");
-        member.setStatus(MemberStatus.NORMAL);
+        member.setStatus(MemberStatus.WITHDRAW);
 
         //when
         memberRepository.save(member);
