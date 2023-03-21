@@ -22,4 +22,8 @@ public class Item {
     private String detail;
     private String sellYn;
     private String reason;
+
+    @OneToOne
+    @Column(name = "item_category_id")
+    private long item_category_id;
 }
