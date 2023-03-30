@@ -4,15 +4,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "order")
 @Getter
 @Setter
-public class order {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
+    @Column(name = "orderId")
     private long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private long memberId;
+
+    @OneToMany(mappedBy = "orderItem")
+    private List<OrderItem> orderItem;
 }

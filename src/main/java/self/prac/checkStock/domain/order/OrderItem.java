@@ -9,13 +9,18 @@ import javax.persistence.*;
 @Table(name = "order_item")
 @Getter
 @Setter
-public class orderItem {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_item_id")
+    @Column(name = "orderItemId")
     private long id;
 
     private long quantity;
     private long price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private long itemId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private long orderId;
 }

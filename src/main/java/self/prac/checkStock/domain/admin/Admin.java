@@ -14,8 +14,8 @@ import javax.persistence.*;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "admin_id")
-    private long id;
+    @Column(name = "adminId")
+    private long adminId;
 
     private String email;
     private String password;

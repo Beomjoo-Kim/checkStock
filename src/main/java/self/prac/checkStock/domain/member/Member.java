@@ -3,8 +3,10 @@ package self.prac.checkStock.domain.member;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import self.prac.checkStock.domain.order.Order;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "member")
@@ -15,8 +17,9 @@ import javax.persistence.*;
 @ToString
 public class Member {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "memberId")
     private long id;
 
     private String password;
@@ -25,5 +28,8 @@ public class Member {
     private String phone;
     @Convert(converter = MemberStatusConverter.class)
     private MemberStatus status;
+
+    @OneToMany(mappedBy = "order")
+    private List<Order> order;
 }
 
