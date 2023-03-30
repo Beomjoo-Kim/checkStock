@@ -5,6 +5,7 @@ import lombok.Setter;
 import self.prac.checkStock.domain.order.OrderItem;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "itemId")
-    private long itemId;
+    private long id;
 
     private String name;
     private long price;
@@ -26,8 +27,8 @@ public class Item {
     private String reason;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private long itemCategoryId;
+    private ItemCategory itemCategory;
 
-    @OneToMany(mappedBy = "orderItem")
-    private List<OrderItem> orderItem;
+    @OneToMany(mappedBy = "item")
+    private List<OrderItem> orderItems = new ArrayList<>();
 }

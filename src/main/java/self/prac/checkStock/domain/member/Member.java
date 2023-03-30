@@ -6,6 +6,7 @@ import lombok.ToString;
 import self.prac.checkStock.domain.order.Order;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,10 +27,11 @@ public class Member {
     private String name;
     private String email;
     private String phone;
+
     @Convert(converter = MemberStatusConverter.class)
     private MemberStatus status;
 
-    @OneToMany(mappedBy = "order")
-    private List<Order> order;
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 }
 

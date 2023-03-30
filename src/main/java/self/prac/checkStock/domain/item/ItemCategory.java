@@ -14,7 +14,7 @@ public class ItemCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "itemCategoryId")
-    private long itemCategoryId;
+    private long id;
     private String name;
 
     @OneToOne(mappedBy = "item")

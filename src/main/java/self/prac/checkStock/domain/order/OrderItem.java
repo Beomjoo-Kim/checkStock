@@ -2,6 +2,7 @@ package self.prac.checkStock.domain.order;
 
 import lombok.Getter;
 import lombok.Setter;
+import self.prac.checkStock.domain.item.Item;
 
 import javax.persistence.*;
 
@@ -20,7 +21,27 @@ public class OrderItem {
     private long price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private long itemId;
+    private Item item;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    private long orderId;
+    private Order order;
+
+    //==association method
+    public void setItem(Item item) {
+        this.item = item;
+        item.getOrderItems().add(this);
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+        order.getOrderItems().add(this);
+    }
+
+    //==creation method
+    public OrderItem createOrderItem(Item item, Order order) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrder(order);
+        return orderItem;
+    }
 }
