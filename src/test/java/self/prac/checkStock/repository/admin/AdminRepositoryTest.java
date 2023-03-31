@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest
-@Import(TestConfig.class)
+@Import({TestConfig.class})
 class AdminRepositoryTest {
 
     @Autowired

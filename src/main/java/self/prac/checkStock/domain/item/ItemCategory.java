@@ -17,6 +17,6 @@ public class ItemCategory {
     private long id;
     private String name;
 
-    @OneToOne(mappedBy = "item")
+    @OneToOne(mappedBy = "itemCategory")
     private Item item;
 }
