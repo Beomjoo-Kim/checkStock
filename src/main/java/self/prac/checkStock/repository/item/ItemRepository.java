@@ -1,6 +1,8 @@
 package self.prac.checkStock.repository.item;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import self.prac.checkStock.domain.item.Item;
 
 import javax.persistence.EntityManager;
@@ -9,9 +11,11 @@ import java.util.List;
 
 import static self.prac.checkStock.domain.item.QItem.*;
 
+@Repository
+@RequiredArgsConstructor
 public class ItemRepository {
-    private EntityManager em;
-    private JPAQueryFactory jpaQueryFactory;
+    private final EntityManager em;
+    private final JPAQueryFactory jpaQueryFactory;
 
     //save, findOne, findAll, findBy~,
     //name, sellYn, quantityZero

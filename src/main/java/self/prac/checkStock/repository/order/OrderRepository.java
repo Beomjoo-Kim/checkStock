@@ -1,6 +1,8 @@
 package self.prac.checkStock.repository.order;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import self.prac.checkStock.domain.member.Member;
 import self.prac.checkStock.domain.order.Order;
 import self.prac.checkStock.domain.order.OrderItem;
@@ -11,9 +13,11 @@ import java.util.List;
 
 import static self.prac.checkStock.domain.order.QOrder.*;
 
+@Repository
+@RequiredArgsConstructor
 public class OrderRepository {
-    private EntityManager em;
-    private JPAQueryFactory jpaQueryFactory;
+    private final EntityManager em;
+    private final JPAQueryFactory jpaQueryFactory;
 
     //save, findOne, findAll, findBy~,
     //member, orderItem

@@ -15,8 +15,8 @@ import static self.prac.checkStock.domain.item.QItemCategory.itemCategory;
 @Repository
 @RequiredArgsConstructor
 public class ItemCategoryRepository {
-    private EntityManager em;
-    private JPAQueryFactory jpaQueryFactory;
+    private final EntityManager em;
+    private final JPAQueryFactory jpaQueryFactory;
 
     //save, findOne, findAll, findBy~,
 
