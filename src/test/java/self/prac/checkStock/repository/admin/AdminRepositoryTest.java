@@ -34,8 +34,8 @@ class AdminRepositoryTest {
         admin.setPassword("123");
 
         //when
-        adminRepository.save(admin);
-        Admin searchedAdmin = adminRepository.findOne(admin.getId());
+        long id = adminRepository.save(admin);
+        Admin searchedAdmin = adminRepository.findOne(id);
 
         //then
         assertThat(admin).isEqualTo(searchedAdmin);

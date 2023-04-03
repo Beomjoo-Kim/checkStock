@@ -3,6 +3,8 @@ package self.prac.checkStock.domain.item;
 import lombok.Getter;
 import lombok.Setter;
 import self.prac.checkStock.domain.order.OrderItem;
+import self.prac.checkStock.exception.CustomErrorCodes;
+import self.prac.checkStock.exception.CustomRuntimeException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,4 +33,16 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    public void addStock(int quantity) {
+        this.quantity += quantity;
+    }
+
+    public void removeStock(int quantity) {
+        long resultQuantity = this.quantity - quantity;
+        if (resultQuantity < 0) {
+            throw new CustomRuntimeException(CustomErrorCodes.NOT_ENOUGH_STOCK);
+        }
+        this.quantity = resultQuantity;
+    }
 }
