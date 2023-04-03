@@ -10,7 +10,6 @@ import self.prac.checkStock.domain.item.Item;
 import self.prac.checkStock.domain.order.Order;
 import self.prac.checkStock.domain.order.OrderItem;
 import self.prac.checkStock.repository.item.ItemRepository;
-import self.prac.checkStock.repository.member.MemberRepository;
 
 import java.util.List;
 
