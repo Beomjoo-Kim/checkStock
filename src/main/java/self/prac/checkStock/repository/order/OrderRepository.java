@@ -22,8 +22,9 @@ public class OrderRepository {
     //save, findOne, findAll, findBy~,
     //member, orderItem
 
-    public void save(Order order) {
+    public long save(Order order) {
         em.persist(order);
+        return order.getId();
     }
 
     public Order findOne(long id) {

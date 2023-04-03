@@ -19,8 +19,9 @@ public class ItemRepository {
 
     //save, findOne, findAll, findBy~,
     //name, sellYn, quantityZero
-    public void save(Item item) {
+    public long save(Item item) {
         em.persist(item);
+        return item.getId();
     }
 
     public Item findOne(long id) {

@@ -20,8 +20,9 @@ public class ItemCategoryRepository {
 
     //save, findOne, findAll, findBy~,
 
-    public void save(ItemCategory itemCategory) {
+    public long save(ItemCategory itemCategory) {
         em.persist(itemCategory);
+        return itemCategory.getId();
     }
 
     public ItemCategory findOne(long id) {

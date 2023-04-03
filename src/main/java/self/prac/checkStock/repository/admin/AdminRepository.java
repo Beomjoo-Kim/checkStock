@@ -17,8 +17,9 @@ public class AdminRepository {
     private final EntityManager em;
     private final JPAQueryFactory jpaQueryFactory;
 
-    public void save(Admin admin) {
+    public long save(Admin admin) {
         em.persist(admin);
+        return admin.getId();
     }
 
     public Admin findOne(long id) {

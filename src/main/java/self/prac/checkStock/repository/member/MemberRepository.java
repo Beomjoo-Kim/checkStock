@@ -17,9 +17,10 @@ public class MemberRepository {
     private final EntityManager em;
     private final JPAQueryFactory jpaQueryFactory;
 
-    public void save(Member member) {
+    public long save(Member member) {
         //TODO : 이것도 대체 가능할지도? jpaRepository 를 implements?
         em.persist(member);
+        return member.getId();
     }
 
     public Member findOne(long id) {
