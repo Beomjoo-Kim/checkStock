@@ -11,11 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "member")
-@Getter
-// delete setter after test
-@Setter
-// delete setter after test
 @ToString
+@Getter
 public class Member {
 
     @Id
@@ -27,11 +24,30 @@ public class Member {
     private String name;
     private String email;
     private String phone;
-
     @Convert(converter = MemberStatusConverter.class)
     private MemberStatus status;
-
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
+
+    public Member(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+    public Member(String email, String name, String password, String phone) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setStatus(MemberStatus status) {
+        this.status = status;
+    }
+
 }
 

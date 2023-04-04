@@ -1,7 +1,14 @@
 package self.prac.checkStock.exception;
 
 public enum CustomErrorCodes {
-    NOT_ENOUGH_STOCK("재고 부족");
+    //member
+    ALREADY_SIGNED("이미 가입된 이메일"),
+    OVER_SIGNED("해당 이메일로 가입된 회원이 둘 이상"),
+    NOT_SIGNED("해당 이메일로 가입된 회원이 없음"),
+    INCORRECT_PASSWORD("비밀번호 이상"),
+    //item
+    NOT_ENOUGH_STOCK("재고 부족"),
+    ;
 
     private String msg;
 

@@ -30,8 +30,7 @@ public class OrderRepositoryTestIt {
     @Transactional
     public void save() {
         //given
-        Member member = new Member();
-        member.setName("testMember");
+        Member member = new Member("testEmail", "testMember", "testPw", "testPh");
 
         Order order = new Order();
         order.setMember(member);
@@ -49,8 +48,7 @@ public class OrderRepositoryTestIt {
     @Transactional
     public void find() {
         //given
-        Member member = new Member();
-        member.setName("testMember");
+        Member member = new Member("testEmail", "testMember", "testPw", "testPh");
         memberRepository.save(member);
 
         OrderItem orderItem = new OrderItem();

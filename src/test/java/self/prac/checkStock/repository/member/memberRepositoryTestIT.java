@@ -27,10 +27,7 @@ public class memberRepositoryTestIT {
     @Rollback(value = false)
     public void save() {
         //given
-        Member member = new Member();
-        member.setName("testA");
-        member.setPhone("1234");
-        member.setEmail("asd");
+        Member member = new Member("asd", "testA", "1234", "1234");
         member.setStatus(MemberStatus.WITHDRAW);
 
         //when
@@ -48,18 +45,10 @@ public class memberRepositoryTestIT {
     @Rollback
     public void find() {
         //given
-        Member member1 = new Member();
-        member1.setName("testA");
-        member1.setPhone("123");
-        member1.setEmail("asd1");
-        member1.setPassword("a1");
+        Member member1 = new Member("asd1", "testA", "a1", "123");
         memberRepository.save(member1);
 
-        Member member2 = new Member();
-        member2.setName("testB");
-        member2.setPhone("123");
-        member2.setEmail("asd2");
-        member2.setPassword("a2");
+        Member member2 = new Member("asd2", "testB", "a2", "123");
         memberRepository.save(member2);
 
         //when
