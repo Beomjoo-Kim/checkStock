@@ -3,6 +3,7 @@ package self.prac.checkStock.repository.member;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.domain.member.Member;
 
 import javax.persistence.EntityManager;
@@ -17,6 +18,7 @@ public class MemberRepository {
     private final EntityManager em;
     private final JPAQueryFactory jpaQueryFactory;
 
+    @Transactional
     public long save(Member member) {
         //TODO : 이것도 대체 가능할지도? jpaRepository 를 implements?
         em.persist(member);

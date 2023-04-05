@@ -2,7 +2,9 @@ package self.prac.checkStock.service.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.domain.member.Member;
+import self.prac.checkStock.domain.member.MemberStatus;
 import self.prac.checkStock.exception.CustomErrorCodes;
 import self.prac.checkStock.exception.CustomRuntimeException;
 import self.prac.checkStock.repository.member.MemberRepository;
@@ -15,6 +17,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
     public Member signUp(Member member) {
         if (memberRepository.findByEmail(member.getEmail()).size() != 0) {
             throw new CustomRuntimeException(CustomErrorCodes.ALREADY_SIGNED);
@@ -43,5 +46,11 @@ public class MemberService {
         Member searchedMember = getMemberByEmail(member.getEmail());
         return searchedMember.getPassword().equals(member.getPassword());
     }
+
+    @Transactional
+    public void modifyStatus(Member member, MemberStatus status) {
+        member.setStatus(status);
+    }
+
 
 }

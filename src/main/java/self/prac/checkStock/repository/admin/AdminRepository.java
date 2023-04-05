@@ -3,6 +3,7 @@ package self.prac.checkStock.repository.admin;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.domain.admin.Admin;
 
 import javax.persistence.EntityManager;
@@ -17,6 +18,7 @@ public class AdminRepository {
     private final EntityManager em;
     private final JPAQueryFactory jpaQueryFactory;
 
+    @Transactional
     public long save(Admin admin) {
         em.persist(admin);
         return admin.getId();

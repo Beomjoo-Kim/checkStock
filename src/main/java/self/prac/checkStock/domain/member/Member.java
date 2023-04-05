@@ -1,6 +1,7 @@
 package self.prac.checkStock.domain.member;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import self.prac.checkStock.domain.order.Order;
@@ -13,6 +14,7 @@ import java.util.List;
 @Table(name = "member")
 @ToString
 @Getter
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -49,5 +51,10 @@ public class Member {
         this.status = status;
     }
 
+    public void modifyMember(String name, String password, String phone) {
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+    }
 }
 
