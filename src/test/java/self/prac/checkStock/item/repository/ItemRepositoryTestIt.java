@@ -88,4 +88,20 @@ public class ItemRepositoryTestIt {
         }
     }
 
+    @Test
+    public void removeItem() {
+        //given
+        Item item = new Item();
+        item.setName("testItem");
+        item.setSellYn("Y");
+        item.setQuantity(0);
+        itemRepository.save(item);
+
+        //when
+        itemRepository.deleteItem(item);
+
+        //then
+        assertThat(itemRepository.findOne(item.getId())).isNull();
+    }
+
 }

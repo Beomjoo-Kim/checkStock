@@ -3,9 +3,9 @@ package self.prac.checkStock.item.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.item.domain.Item;
 import self.prac.checkStock.item.domain.ItemCategory;
-import self.prac.checkStock.item.domain.QItemCategory;
 
 import javax.persistence.EntityManager;
 
@@ -22,6 +22,7 @@ public class ItemCategoryRepository {
 
     //save, findOne, findAll, findBy~,
 
+    @Transactional
     public long save(ItemCategory itemCategory) {
         em.persist(itemCategory);
         return itemCategory.getId();

@@ -28,6 +28,9 @@ public class Item {
     private String sellYn;
     private String reason;
 
+    @Convert(converter = ItemStatusConverter.class)
+    private ItemStatus itemStatus;
+
     @OneToOne(fetch = FetchType.LAZY)
     private ItemCategory itemCategory;
 

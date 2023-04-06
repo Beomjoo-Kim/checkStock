@@ -3,10 +3,10 @@ package self.prac.checkStock.order.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.order.domain.Order;
 import self.prac.checkStock.order.domain.OrderItem;
-import self.prac.checkStock.order.domain.QOrder;
 
 import javax.persistence.EntityManager;
 
@@ -24,6 +24,7 @@ public class OrderRepository {
     //save, findOne, findAll, findBy~,
     //member, orderItem
 
+    @Transactional
     public long save(Order order) {
         em.persist(order);
         return order.getId();
