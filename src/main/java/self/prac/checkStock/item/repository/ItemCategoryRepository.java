@@ -5,12 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import self.prac.checkStock.item.domain.Item;
 import self.prac.checkStock.item.domain.ItemCategory;
+import self.prac.checkStock.item.domain.QItemCategory;
 
 import javax.persistence.EntityManager;
 
 import java.util.List;
 
-import static self.prac.checkStock.domain.item.QItemCategory.itemCategory;
+import static self.prac.checkStock.item.domain.QItemCategory.itemCategory;
+
 
 @Repository
 @RequiredArgsConstructor

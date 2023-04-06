@@ -3,21 +3,16 @@ package self.prac.checkStock.member.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import self.prac.checkStock.TestConfig;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.member.domain.MemberStatus;
-import self.prac.checkStock.member.repository.MemberRepository;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-//test 에서 jpa 를 사용하기 위해 testConfig 에서 따로 bean 을 등록.
-@Import({TestConfig.class})
 public class memberRepositoryTestIT {
 
     @Autowired

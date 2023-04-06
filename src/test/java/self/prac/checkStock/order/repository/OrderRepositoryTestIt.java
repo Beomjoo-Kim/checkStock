@@ -3,22 +3,17 @@ package self.prac.checkStock.order.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
-import self.prac.checkStock.TestConfig;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.order.domain.Order;
 import self.prac.checkStock.order.domain.OrderItem;
 import self.prac.checkStock.member.repository.MemberRepository;
-import self.prac.checkStock.order.repository.OrderItemRepository;
-import self.prac.checkStock.order.repository.OrderRepository;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@Import(TestConfig.class)
 public class OrderRepositoryTestIt {
 
     @Autowired

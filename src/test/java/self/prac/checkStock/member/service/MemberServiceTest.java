@@ -3,20 +3,16 @@ package self.prac.checkStock.member.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
-import self.prac.checkStock.TestConfig;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.global.error.exception.CustomErrorCodes;
 import self.prac.checkStock.global.error.exception.CustomRuntimeException;
 import self.prac.checkStock.member.repository.MemberRepository;
-import self.prac.checkStock.member.service.MemberService;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
-@Import(TestConfig.class)
 public class MemberServiceTest {
 
     @Autowired

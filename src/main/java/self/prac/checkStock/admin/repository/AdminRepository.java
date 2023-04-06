@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.admin.domain.Admin;
+import self.prac.checkStock.admin.domain.QAdmin;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static self.prac.checkStock.domain.admin.QAdmin.admin;
+import static self.prac.checkStock.admin.domain.QAdmin.*;
+
 
 @Repository
 @RequiredArgsConstructor

@@ -3,20 +3,15 @@ package self.prac.checkStock.item.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
-import self.prac.checkStock.TestConfig;
 import self.prac.checkStock.item.domain.Item;
 import self.prac.checkStock.item.domain.ItemCategory;
-import self.prac.checkStock.item.repository.ItemCategoryRepository;
-import self.prac.checkStock.item.repository.ItemRepository;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
-@Import(TestConfig.class)
 public class ItemCategoryRepositoryTestIt {
 
     @Autowired

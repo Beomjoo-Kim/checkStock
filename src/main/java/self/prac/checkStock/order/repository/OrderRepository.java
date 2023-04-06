@@ -6,12 +6,14 @@ import org.springframework.stereotype.Repository;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.order.domain.Order;
 import self.prac.checkStock.order.domain.OrderItem;
+import self.prac.checkStock.order.domain.QOrder;
 
 import javax.persistence.EntityManager;
 
 import java.util.List;
 
-import static self.prac.checkStock.domain.order.QOrder.*;
+import static self.prac.checkStock.order.domain.QOrder.*;
+
 
 @Repository
 @RequiredArgsConstructor

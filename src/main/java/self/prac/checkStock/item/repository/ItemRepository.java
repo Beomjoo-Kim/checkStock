@@ -4,12 +4,14 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import self.prac.checkStock.item.domain.Item;
+import self.prac.checkStock.item.domain.QItem;
 
 import javax.persistence.EntityManager;
 
 import java.util.List;
 
-import static self.prac.checkStock.domain.item.QItem.*;
+import static self.prac.checkStock.item.domain.QItem.item;
+
 
 @Repository
 @RequiredArgsConstructor
