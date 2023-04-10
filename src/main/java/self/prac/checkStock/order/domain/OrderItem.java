@@ -38,10 +38,11 @@ public class OrderItem {
     }
 
     //==creation method
-    public OrderItem createOrderItem(Item item, Order order) {
+    public static OrderItem createOrderItem(Item item, long quantity, long price) {
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
-        orderItem.setOrder(order);
+        orderItem.setQuantity(quantity);
+        orderItem.setPrice(price);
         return orderItem;
     }
 }

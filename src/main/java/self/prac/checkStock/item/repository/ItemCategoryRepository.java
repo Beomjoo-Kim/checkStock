@@ -22,7 +22,6 @@ public class ItemCategoryRepository {
 
     //save, findOne, findAll, findBy~,
 
-    @Transactional
     public long save(ItemCategory itemCategory) {
         em.persist(itemCategory);
         return itemCategory.getId();

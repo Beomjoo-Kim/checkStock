@@ -20,7 +20,6 @@ public class AdminRepository {
     private final EntityManager em;
     private final JPAQueryFactory jpaQueryFactory;
 
-    @Transactional
     public long save(Admin admin) {
         em.persist(admin);
         return admin.getId();

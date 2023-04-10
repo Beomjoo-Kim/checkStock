@@ -24,7 +24,6 @@ public class OrderRepository {
     //save, findOne, findAll, findBy~,
     //member, orderItem
 
-    @Transactional
     public long save(Order order) {
         em.persist(order);
         return order.getId();

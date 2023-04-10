@@ -20,7 +20,6 @@ public class MemberRepository {
     private final EntityManager em;
     private final JPAQueryFactory jpaQueryFactory;
 
-    @Transactional
     public long save(Member member) {
         //TODO : 이것도 대체 가능할지도? jpaRepository 를 implements?
         em.persist(member);

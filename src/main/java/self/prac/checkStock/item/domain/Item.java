@@ -8,6 +8,7 @@ import self.prac.checkStock.global.error.exception.CustomRuntimeException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,7 @@ public class Item {
     private String detail;
     private String sellYn;
     private String reason;
+    private Date removeRequestDate;
 
     @Convert(converter = ItemStatusConverter.class)
     private ItemStatus itemStatus;
