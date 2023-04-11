@@ -9,8 +9,11 @@ import self.prac.checkStock.item.repository.ItemRepository;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.order.domain.Order;
 import self.prac.checkStock.order.domain.OrderItem;
+import self.prac.checkStock.order.domain.OrderStatus;
 import self.prac.checkStock.order.repository.OrderItemRepository;
 import self.prac.checkStock.order.repository.OrderRepository;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,10 +39,15 @@ public class OrderService {
     }
 
     @Transactional
-    public Order cancelOrder(Order order) {
-
-
+    public Order cancelOrder(long orderId) {
+        Order order = orderRepository.findOne(orderId);
+        order.setOrderStatus(OrderStatus.CANCELED);
         return order;
+    }
+
+    public List<Order> findOrders(Member member) {
+        List<Order> orderList = orderRepository.findByMember(member);
+        return orderList;
     }
 
 }
