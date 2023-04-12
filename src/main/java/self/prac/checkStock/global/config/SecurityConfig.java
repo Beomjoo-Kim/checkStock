@@ -1,35 +1,29 @@
 package self.prac.checkStock.global.config;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import self.prac.checkStock.global.utils.JwtUtil;
+import org.springframework.security.web.SecurityFilterChain;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
-public class SecurityConfig implements WebSecurityConfigurer<WebSecurity> {
+public class SecurityConfig {
 
-    private final JwtUtil jwtUtil;
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
+        httpSecurity.csrf().disable();
+        httpSecurity
+                .authorizeRequests()
+                .antMatchers("/api/member/signUp").permitAll()
+                .anyRequest().authenticated()
 
-    public void configure(HttpSecurity http) throws Exception {
-        // HttpSecurity 설정
+        ;
+
+        return httpSecurity.build();
     }
 
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 인증 관련 설정
-    }
-
-    public void configure(WebSecurity web) throws Exception {
-        // web 리소스 관련 설정
-    }
-
-    public void init(WebSecurity web) throws Exception {
-        // init 메서드 구현
-    }
 }
 
