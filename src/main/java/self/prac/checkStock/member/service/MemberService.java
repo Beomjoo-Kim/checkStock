@@ -26,10 +26,8 @@ public class MemberService {
         return member;
     }
 
-    public void signIn(Member member) {
-        if (!isPasswordCorrect(member)) {
-            throw new CustomRuntimeException(CustomErrorCodes.INCORRECT_PASSWORD);
-        }
+    public Member signIn(Member member) {
+        return isPasswordCorrect(member);
     }
 
     public Member getMemberByEmail(String email) {
@@ -42,9 +40,13 @@ public class MemberService {
         return memberList.get(0);
     }
 
-    public boolean isPasswordCorrect(Member member) {
+    @Transactional
+    public Member isPasswordCorrect(Member member) {
         Member searchedMember = getMemberByEmail(member.getEmail());
-        return searchedMember.getPassword().equals(member.getPassword());
+        if (!searchedMember.getPassword().equals(member.getPassword())) {
+            throw new CustomRuntimeException(CustomErrorCodes.INCORRECT_PASSWORD);
+        }
+        return searchedMember;
     }
 
     @Transactional

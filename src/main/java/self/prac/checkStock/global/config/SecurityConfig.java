@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Slf4j
 @Configuration
@@ -14,14 +16,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-        httpSecurity.csrf().disable();
         httpSecurity
-                .authorizeRequests()
-                .antMatchers("/api/member/signUp").permitAll()
-                .anyRequest().authenticated()
+                .cors().and().csrf().disable()
 
         ;
-
         return httpSecurity.build();
     }
 

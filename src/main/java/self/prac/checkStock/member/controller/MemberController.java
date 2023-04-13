@@ -26,10 +26,10 @@ public class MemberController {
 
     @GetMapping("/signIn")
     public ResponseEntity<Member> signIn(@RequestBody Member member, HttpServletRequest request) {
-        memberService.signIn(member);
+        Member signInMember = memberService.signIn(member);
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, member);
-        return ResponseEntity.ok(member);
+        session.setAttribute(SessionConst.LOGIN_MEMBER, signInMember);
+        return ResponseEntity.ok(signInMember);
     }
 
     @GetMapping("/signOut")
