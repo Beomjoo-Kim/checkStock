@@ -3,10 +3,14 @@ package self.prac.checkStock.member.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import self.prac.checkStock.order.domain.Order;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -29,6 +33,7 @@ public class Member {
     private MemberStatus status;
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
+
 
     public Member(String email, String name, String password) {
         this.email = email;
@@ -55,5 +60,6 @@ public class Member {
         this.password = password;
         this.phone = phone;
     }
+
 }
 

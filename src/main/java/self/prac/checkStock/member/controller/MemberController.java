@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import self.prac.checkStock.global.constants.SessionConst;
+import self.prac.checkStock.global.utils.JwtUtil;
 import self.prac.checkStock.member.domain.Member;
+import self.prac.checkStock.member.domain.MemberDto;
 import self.prac.checkStock.member.domain.MemberStatus;
 import self.prac.checkStock.global.error.exception.CustomErrorCodes;
 import self.prac.checkStock.global.error.exception.CustomRuntimeException;
@@ -23,13 +25,15 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final JwtUtil jwtUtil;
 
     @GetMapping("/signIn")
-    public ResponseEntity<Member> signIn(@RequestBody Member member, HttpServletRequest request) {
+    public String signIn(@RequestBody Member member, HttpServletRequest request) {
         Member signInMember = memberService.signIn(member);
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, signInMember);
-        return ResponseEntity.ok(signInMember);
+        MemberDto memberDto = new MemberDto(signInMember.getId(), signInMember.getEmail(), signInMember.getName());
+        return jwtUtil.generateToken(memberDto);
     }
 
     @GetMapping("/signOut")

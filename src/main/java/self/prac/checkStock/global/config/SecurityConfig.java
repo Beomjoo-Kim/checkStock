@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -15,12 +16,23 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-        httpSecurity
-                .cors().and().csrf().disable()
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        http.cors().and().csrf().disable();
+        http.headers().frameOptions().disable();
+        http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
 
+        http
+                .httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .anyRequest().permitAll()
+//                .and()
+//                .addFilterBefore(new JwtAuthFilter(jwtTokenProvider))
         ;
-        return httpSecurity.build();
+
+        return http.build();
     }
 
 }
