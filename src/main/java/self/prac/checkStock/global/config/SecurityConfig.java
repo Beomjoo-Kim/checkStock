@@ -19,15 +19,20 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.cors().and().csrf().disable();
         http.headers().frameOptions().disable();
-        http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
+        //ROLE
+        http
+                .authorizeRequests()
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/api/member/signUp").permitAll()
+                .antMatchers("/api/member/signIn").permitAll()
+//                .antMatchers("/api/member/**").hasRole("ADMIN")
+                .antMatchers("/api/order/**").hasRole("MEMBER")
+        ;
 
+        //jwt
         http
                 .httpBasic().disable()
-                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .anyRequest().permitAll()
 //                .and()
 //                .addFilterBefore(new JwtAuthFilter(jwtTokenProvider))
         ;

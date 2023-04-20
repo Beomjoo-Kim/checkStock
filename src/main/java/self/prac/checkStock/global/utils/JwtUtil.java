@@ -27,9 +27,11 @@ public class JwtUtil {
 
         log.info("memberEmail : " + memberDto.getEmail());
         log.info("memberName : " + memberDto.getName());
+        log.info("role : " + memberDto.getRole());
 
         claims.put("email", memberDto.getId());
         claims.put("name", memberDto.getName());
+        claims.put("role", memberDto.getRole());
         return createToken(claims, memberDto.getId());
     }
 

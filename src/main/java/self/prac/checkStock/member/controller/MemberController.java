@@ -32,7 +32,7 @@ public class MemberController {
         Member signInMember = memberService.signIn(member);
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, signInMember);
-        MemberDto memberDto = new MemberDto(signInMember.getId(), signInMember.getEmail(), signInMember.getName());
+        MemberDto memberDto = new MemberDto(signInMember.getId(), signInMember.getEmail(), signInMember.getName(), signInMember.getRole());
         return jwtUtil.generateToken(memberDto);
     }
 
