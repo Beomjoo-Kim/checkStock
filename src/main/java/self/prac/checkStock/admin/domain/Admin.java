@@ -26,6 +26,7 @@ public class Admin implements UserDetails {
     private String email;
     private String password;
     private String name;
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

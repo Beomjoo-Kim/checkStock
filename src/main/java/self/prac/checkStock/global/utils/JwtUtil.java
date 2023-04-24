@@ -4,11 +4,18 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.member.domain.MemberDto;
+import self.prac.checkStock.member.service.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
@@ -18,7 +25,12 @@ import java.util.function.Function;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtUtil {
+    //TODO : refreshToken 구현
+
+    private final MemberService memberService;
+
     private static final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private static final long EXPIRATION_TIME =  30 * 60 * 1000L; //30min
 
@@ -29,7 +41,7 @@ public class JwtUtil {
         log.info("memberName : " + memberDto.getName());
         log.info("role : " + memberDto.getRole());
 
-        claims.put("email", memberDto.getId());
+        claims.put("email", memberDto.getEmail());
         claims.put("name", memberDto.getName());
         claims.put("role", memberDto.getRole());
         return createToken(claims, memberDto.getId());
@@ -45,21 +57,22 @@ public class JwtUtil {
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .signWith(KEY)
+                .setHeaderParam("typ", "JWT")
                 .compact();
     }
 
     public boolean validateToken(String token, MemberDto memberDto) {
-        String id = extractMemberId(token);
-        return id.equals(memberDto.getId()) && !isTokenExpired(token);
+        String id = extractMemberEmail(token);
+        return id.equals(memberDto.getEmail()) && !isTokenExpired(token);
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         Date expiration = extractExpiration(token);
         return expiration.before(new Date());
     }
 
-    public String extractMemberId(String token) {
-        return extractClaim(token, claims -> claims.get("id", String.class));
+    public String extractMemberEmail(String token) {
+        return extractClaim(token, claims -> claims.get("email", String.class));
     }
 
     public String extractMemberName(String token) {
@@ -83,4 +96,16 @@ public class JwtUtil {
         return extractAllClaims(token).getSubject();
     }
 
+    public String extractToken(HttpServletRequest request) {
+        final String authorizationHeader = request.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7);
+        }
+        return null;
+    }
+
+    public Authentication getAuthentication(String token) {
+        Member member = memberService.getMemberByEmail(extractMemberEmail(token));
+        return new UsernamePasswordAuthenticationToken(member, "", member.getAuthorities());
+    }
 }

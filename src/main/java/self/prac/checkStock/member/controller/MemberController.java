@@ -28,11 +28,9 @@ public class MemberController {
     private final JwtUtil jwtUtil;
 
     @GetMapping("/signIn")
-    public String signIn(@RequestBody Member member, HttpServletRequest request) {
+    public String signIn(@RequestBody Member member) {
         Member signInMember = memberService.signIn(member);
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, signInMember);
-        MemberDto memberDto = new MemberDto(signInMember.getId(), signInMember.getEmail(), signInMember.getName(), signInMember.getRole());
+        MemberDto memberDto = new MemberDto(signInMember.getId(), signInMember.getName(), signInMember.getEmail(), signInMember.getRole());
         return jwtUtil.generateToken(memberDto);
     }
 
@@ -46,40 +44,32 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<Member> signUp(HttpServletRequest request, @RequestBody Member member) {
+    public ResponseEntity<Member> signUp(@RequestBody Member member) {
         memberService.signUp(member);
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, member);
         return ResponseEntity.ok(member);
     }
 
     @GetMapping("/members")
     public ResponseEntity<List<Member>> members(HttpServletRequest request) {
-        if (request.getSession().getAttribute(SessionConst.LOGIN_ADMIN) != null) {
-            return ResponseEntity.ok(memberRepository.findAll());
-        } else {
-            throw new CustomRuntimeException(CustomErrorCodes.NO_AUTH);
-        }
+        return ResponseEntity.ok(memberRepository.findAll());
     }
 
     @GetMapping("/{memberId}")
     public ResponseEntity<Member> member(@PathVariable Long memberId, HttpServletRequest request) {
-        if (request.getSession().getAttribute(SessionConst.LOGIN_ADMIN) != null) {
             return ResponseEntity.ok(memberRepository.findOne(memberId));
-        } else {
-            throw new CustomRuntimeException(CustomErrorCodes.NO_AUTH);
-        }
     }
 
     @PostMapping("/kick/{memberId}")
-    public Member kickMember(@PathVariable Long id) {
+    public ResponseEntity<Member> kickMember(@PathVariable Long id) {
         Member member = memberRepository.findOne(id);
         memberService.modifyStatus(member, MemberStatus.BANNED);
-        return member;
+        return ResponseEntity.ok(member);
     }
 
     @PostMapping("/modify")
     public Member modifyMember(@RequestBody Member member) {
+        Member modifiedMember = memberRepository.findOne(member.getId());
+        //modifiedMember 에 set
         return null;
     }
 }
