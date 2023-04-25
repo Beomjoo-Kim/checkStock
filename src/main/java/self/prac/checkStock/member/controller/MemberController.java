@@ -4,13 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import self.prac.checkStock.global.constants.SessionConst;
 import self.prac.checkStock.global.utils.JwtUtil;
 import self.prac.checkStock.member.domain.Member;
-import self.prac.checkStock.member.domain.MemberDto;
+import self.prac.checkStock.global.domain.UserDto;
 import self.prac.checkStock.member.domain.MemberStatus;
-import self.prac.checkStock.global.error.exception.CustomErrorCodes;
-import self.prac.checkStock.global.error.exception.CustomRuntimeException;
 import self.prac.checkStock.member.repository.MemberRepository;
 import self.prac.checkStock.member.service.MemberService;
 
@@ -30,8 +27,8 @@ public class MemberController {
     @GetMapping("/signIn")
     public String signIn(@RequestBody Member member) {
         Member signInMember = memberService.signIn(member);
-        MemberDto memberDto = new MemberDto(signInMember.getId(), signInMember.getName(), signInMember.getEmail(), signInMember.getRole());
-        return jwtUtil.generateToken(memberDto);
+        UserDto userDto = new UserDto(signInMember.getId(), signInMember.getName(), signInMember.getEmail(), signInMember.getRole());
+        return jwtUtil.generateToken(userDto);
     }
 
     @GetMapping("/signOut")

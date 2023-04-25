@@ -34,6 +34,8 @@ public class SecurityConfig {
                 .antMatchers("/api/member/signIn").permitAll()
 //                .antMatchers("/api/member/**").hasRole("ADMIN")
                 .antMatchers("/api/order/**").hasRole("MEMBER")
+                //TODO : admin 권한관리
+                .antMatchers("/api/member/members").hasRole("ADMIN")
                 .antMatchers("/api/member/**").hasRole("MEMBER")
         ;
 

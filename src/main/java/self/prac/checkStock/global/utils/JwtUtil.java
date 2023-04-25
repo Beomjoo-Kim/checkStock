@@ -8,15 +8,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import self.prac.checkStock.member.domain.Member;
-import self.prac.checkStock.member.domain.MemberDto;
+import self.prac.checkStock.global.domain.UserDto;
 import self.prac.checkStock.member.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,17 +31,17 @@ public class JwtUtil {
     private static final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private static final long EXPIRATION_TIME =  30 * 60 * 1000L; //30min
 
-    public String generateToken(MemberDto memberDto) {
+    public String generateToken(UserDto userDto) {
         Map<String, Object> claims = new HashMap<>();
 
-        log.info("memberEmail : " + memberDto.getEmail());
-        log.info("memberName : " + memberDto.getName());
-        log.info("role : " + memberDto.getRole());
+        log.info("memberEmail : " + userDto.getEmail());
+        log.info("memberName : " + userDto.getName());
+        log.info("role : " + userDto.getRole());
 
-        claims.put("email", memberDto.getEmail());
-        claims.put("name", memberDto.getName());
-        claims.put("role", memberDto.getRole());
-        return createToken(claims, memberDto.getId());
+        claims.put("email", userDto.getEmail());
+        claims.put("name", userDto.getName());
+        claims.put("role", userDto.getRole());
+        return createToken(claims, userDto.getId());
     }
 
     private String createToken(Map<String, Object> claims, Long id) {
@@ -61,9 +58,9 @@ public class JwtUtil {
                 .compact();
     }
 
-    public boolean validateToken(String token, MemberDto memberDto) {
+    public boolean validateToken(String token, UserDto userDto) {
         String id = extractMemberEmail(token);
-        return id.equals(memberDto.getEmail()) && !isTokenExpired(token);
+        return id.equals(userDto.getEmail()) && !isTokenExpired(token);
     }
 
     public boolean isTokenExpired(String token) {

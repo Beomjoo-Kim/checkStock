@@ -1,18 +1,17 @@
-package self.prac.checkStock.member.domain;
-
+package self.prac.checkStock.admin.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MemberDto {
+public class AdminDto {
     private Long id;
     private String email;
     private String name;
     private String role;
 
-    public MemberDto(Long id, String name, String email, String role) {
+    public AdminDto(Long id, String name, String email, String role) {
         this.id = id;
         this.email = email;
         this.name = name;

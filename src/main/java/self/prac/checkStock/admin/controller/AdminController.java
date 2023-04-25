@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import self.prac.checkStock.admin.domain.Admin;
 import self.prac.checkStock.admin.repository.AdminRepository;
 import self.prac.checkStock.admin.service.AdminService;
+import self.prac.checkStock.global.utils.JwtUtil;
+import self.prac.checkStock.global.domain.UserDto;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,6 +15,7 @@ import self.prac.checkStock.admin.service.AdminService;
 public class AdminController {
     private final AdminService adminService;
     private final AdminRepository adminRepository;
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/signUp")
     public ResponseEntity<Admin> signUp(@RequestBody Admin admin) {
@@ -21,11 +24,10 @@ public class AdminController {
     }
 
     @GetMapping("/signIn")
-    public ResponseEntity<Admin> signIn(@RequestBody Admin admin) {
-
-
-
-        return ResponseEntity.ok(admin);
+    public String signIn(@RequestBody Admin admin) {
+        adminService.signIn(admin);
+        UserDto adminDto = new UserDto(admin.getId(), admin.getName(), admin.getEmail(), admin.getRole());
+        return jwtUtil.generateToken(adminDto);
     }
 
 }
