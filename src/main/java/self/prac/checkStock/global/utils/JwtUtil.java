@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import self.prac.checkStock.admin.domain.Admin;
+import self.prac.checkStock.admin.service.AdminService;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.global.domain.UserDto;
 import self.prac.checkStock.member.service.MemberService;
@@ -27,6 +29,7 @@ public class JwtUtil {
     //TODO : refreshToken 구현
 
     private final MemberService memberService;
+    private final AdminService adminService;
 
     private static final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private static final long EXPIRATION_TIME =  30 * 60 * 1000L; //30min
@@ -59,7 +62,7 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String token, UserDto userDto) {
-        String id = extractMemberEmail(token);
+        String id = extractUserEmail(token);
         return id.equals(userDto.getEmail()) && !isTokenExpired(token);
     }
 
@@ -68,12 +71,16 @@ public class JwtUtil {
         return expiration.before(new Date());
     }
 
-    public String extractMemberEmail(String token) {
+    public String extractUserEmail(String token) {
         return extractClaim(token, claims -> claims.get("email", String.class));
     }
 
-    public String extractMemberName(String token) {
+    public String extractUserName(String token) {
         return extractClaim(token, claims -> claims.get("name", String.class));
+    }
+
+    public String extractRole(String token) {
+        return extractClaim(token, claims -> claims.get("role", String.class));
     }
 
     public Date extractExpiration(String token) {
@@ -101,8 +108,13 @@ public class JwtUtil {
         return null;
     }
 
-    public Authentication getAuthentication(String token) {
-        Member member = memberService.getMemberByEmail(extractMemberEmail(token));
+    public Authentication getMemberAuthentication(String token) {
+        Member member = memberService.getMemberByEmail(extractUserEmail(token));
         return new UsernamePasswordAuthenticationToken(member, "", member.getAuthorities());
+    }
+
+    public Authentication getAdminAuthentication(String token) {
+        Admin admin = adminService.findAdminByEmail(extractUserEmail(token));
+        return new UsernamePasswordAuthenticationToken(admin, "", admin.getAuthorities());
     }
 }

@@ -26,8 +26,8 @@ public class AdminService {
         adminRepository.save(admin);
     }
 
-    public void signIn(Admin admin) {
-        isPasswordCorrect(admin);
+    public Admin signIn(Admin admin) {
+        return isPasswordCorrect(admin);
     }
     @Transactional
     public Admin isPasswordCorrect(Admin admin) {
@@ -38,7 +38,7 @@ public class AdminService {
         return searchedAdmin;
     }
 
-    private Admin findAdminByEmail(String email) {
+    public Admin findAdminByEmail(String email) {
         List<Admin> adminList = adminRepository.findByEmail(email);
         if (adminList.size() < 1) {
             throw new CustomRuntimeException(CustomErrorCodes.NOT_SIGNED);

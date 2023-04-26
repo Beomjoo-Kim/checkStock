@@ -24,7 +24,17 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         // TODO
         String token = jwtUtil.extractToken((HttpServletRequest) request);
         if (token!=null && !jwtUtil.isTokenExpired(token)) {
-            Authentication authentication = jwtUtil.getAuthentication(token);
+            Authentication authentication = null;
+            switch (jwtUtil.extractRole(token)) {
+                case "ROLE_ADMIN":
+                    authentication = jwtUtil.getAdminAuthentication(token);
+                    break;
+                case "ROLE_MEMBER":
+                    authentication = jwtUtil.getMemberAuthentication(token);
+                    break;
+                default:
+                    break;
+            }
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);

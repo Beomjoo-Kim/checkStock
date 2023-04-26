@@ -25,8 +25,8 @@ public class AdminController {
 
     @GetMapping("/signIn")
     public String signIn(@RequestBody Admin admin) {
-        adminService.signIn(admin);
-        UserDto adminDto = new UserDto(admin.getId(), admin.getName(), admin.getEmail(), admin.getRole());
+        Admin signInAdmin = adminService.signIn(admin);
+        UserDto adminDto = new UserDto(signInAdmin.getId(), signInAdmin.getName(), signInAdmin.getEmail(), signInAdmin.getRole());
         return jwtUtil.generateToken(adminDto);
     }
 

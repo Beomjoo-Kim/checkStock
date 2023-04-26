@@ -30,12 +30,12 @@ public class SecurityConfig {
         http
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/api/member/signUp").permitAll()
-                .antMatchers("/api/member/signIn").permitAll()
 //                .antMatchers("/api/member/**").hasRole("ADMIN")
                 .antMatchers("/api/order/**").hasRole("MEMBER")
                 //TODO : admin 권한관리
                 .antMatchers("/api/member/members").hasRole("ADMIN")
+                .antMatchers("/api/member/signUp").permitAll()
+                .antMatchers("/api/member/signIn").permitAll()
                 .antMatchers("/api/member/**").hasRole("MEMBER")
         ;
 
