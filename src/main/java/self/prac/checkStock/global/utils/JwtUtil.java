@@ -108,13 +108,25 @@ public class JwtUtil {
         return null;
     }
 
-    public Authentication getMemberAuthentication(String token) {
+    private Authentication getMemberAuthentication(String token) {
         Member member = memberService.getMemberByEmail(extractUserEmail(token));
         return new UsernamePasswordAuthenticationToken(member, "", member.getAuthorities());
     }
 
-    public Authentication getAdminAuthentication(String token) {
+    private Authentication getAdminAuthentication(String token) {
         Admin admin = adminService.findAdminByEmail(extractUserEmail(token));
         return new UsernamePasswordAuthenticationToken(admin, "", admin.getAuthorities());
+    }
+
+    public Authentication getUserAuthentication(String token) {
+        String role = extractRole(token);
+        switch (role) {
+            case "ROLE_ADMIN":
+                return getAdminAuthentication(token);
+            case "ROLE_MEMBER":
+                return getMemberAuthentication(token);
+            default:
+                return null;
+        }
     }
 }

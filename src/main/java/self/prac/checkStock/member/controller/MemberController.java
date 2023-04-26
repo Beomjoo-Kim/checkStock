@@ -3,6 +3,7 @@ package self.prac.checkStock.member.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import self.prac.checkStock.global.utils.JwtUtil;
 import self.prac.checkStock.member.domain.Member;
@@ -63,10 +64,14 @@ public class MemberController {
         return ResponseEntity.ok(member);
     }
 
+    @Transactional
     @PostMapping("/modify")
     public Member modifyMember(@RequestBody Member member) {
         Member modifiedMember = memberRepository.findOne(member.getId());
-        //modifiedMember 에 set
-        return null;
+        if (member.getName().isEmpty() || member.getPassword().isEmpty() || member.getPhone().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        modifiedMember.modifyMember(member.getName(), member.getPassword(), member.getPhone());
+        return modifiedMember;
     }
 }
