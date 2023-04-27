@@ -8,6 +8,7 @@ public enum CustomErrorCodes {
     INCORRECT_PASSWORD("비밀번호 이상"),
     //item
     NOT_ENOUGH_STOCK("재고 부족"),
+    NO_ITEM_CATEGORY("해당 물품 분류 없음"),
 
     //auth
     NO_AUTH("권한 없음"),
