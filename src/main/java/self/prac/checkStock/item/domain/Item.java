@@ -36,7 +36,7 @@ public class Item {
     @OneToOne(fetch = FetchType.LAZY)
     private ItemCategory itemCategory;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public void addStock(int quantity) {

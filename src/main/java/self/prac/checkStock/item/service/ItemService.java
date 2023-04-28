@@ -6,27 +6,36 @@ import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.global.error.exception.CustomErrorCodes;
 import self.prac.checkStock.global.error.exception.CustomRuntimeException;
 import self.prac.checkStock.item.domain.Item;
+import self.prac.checkStock.item.domain.ItemCategory;
 import self.prac.checkStock.item.domain.ItemStatus;
-import self.prac.checkStock.item.dto.RegistItemDto;
+import self.prac.checkStock.item.dto.RegisterItemDto;
 import self.prac.checkStock.item.dto.RequestItemDto;
 import self.prac.checkStock.item.dto.UpdateItemDto;
+import self.prac.checkStock.item.repository.ItemCategoryRepository;
 import self.prac.checkStock.item.repository.ItemRepository;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
+    private final ItemCategoryRepository itemCategoryRepository;
 
     @Transactional
-    public Item registItem(RegistItemDto registItemDto) {
+    public Item registerItem(RegisterItemDto registerItemDto) {
+        List<ItemCategory> searchedItemCategoryList = itemCategoryRepository.findByName(registerItemDto.getItemCategory().getName());
+        if (searchedItemCategoryList == null || searchedItemCategoryList.size() != 1) {
+            throw new IllegalArgumentException("물품 분류 필요");
+        }
+
         Item item = new Item();
-        item.setName(registItemDto.getName());
-        item.setPrice(registItemDto.getPrice());
-        item.setQuantity(registItemDto.getQuantity());
-        item.setSellYn(registItemDto.getSellYn());
-        item.setItemCategory(registItemDto.getItemCategory());
+        item.setName(registerItemDto.getName());
+        item.setPrice(registerItemDto.getPrice());
+        item.setQuantity(registerItemDto.getQuantity());
+        item.setSellYn(registerItemDto.getSellYn());
+        item.setItemCategory(registerItemDto.getItemCategory());
         item.setItemStatus(ItemStatus.NORMAL);
 
         long id = itemRepository.save(item);
@@ -64,6 +73,17 @@ public class ItemService {
         if (requestedItem.getQuantity() < requestItemDto.getQuantity()) {
             throw new CustomRuntimeException(CustomErrorCodes.NOT_ENOUGH_STOCK);
         }
+    }
+
+
+    @Transactional
+    public ItemCategory registerItemCategory(ItemCategory itemCategory) {
+        List<ItemCategory> searchedItemCategoryList = itemCategoryRepository.findByName(itemCategory.getName());
+        if (searchedItemCategoryList != null && searchedItemCategoryList.size() > 0) {
+            throw new IllegalArgumentException("이미 존재하는 물품 분류");
+        }
+        itemCategoryRepository.save(itemCategory);
+        return itemCategory;
     }
 
 }

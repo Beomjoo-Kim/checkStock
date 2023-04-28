@@ -5,8 +5,7 @@ import lombok.Getter;
 import self.prac.checkStock.item.domain.ItemCategory;
 
 @Getter
-@AllArgsConstructor
-public class RegistItemDto {
+public class RegisterItemDto {
     private String name;
     private long price;
     private long quantity;
