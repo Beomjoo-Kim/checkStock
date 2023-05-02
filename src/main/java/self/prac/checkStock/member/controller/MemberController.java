@@ -42,9 +42,9 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<Member> signUp(@RequestBody Member member) {
+    public Member signUp(@RequestBody Member member) {
         memberService.signUp(member);
-        return ResponseEntity.ok(member);
+        return member;
     }
 
     @GetMapping("/members")

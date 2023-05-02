@@ -24,13 +24,16 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
 
     @Transactional
-    public Order registOrder(RequestItemDto requestItemDto, Member member) {
+    public Order registerOrder(RequestItemDto requestItemDto, Member member) {
         Item item = itemRepository.findOne(requestItemDto.getItemId());
 
         //TODO : discount logic here later
         long price = item.getPrice();
 
-        OrderItem orderItem = OrderItem.createOrderItem(item, requestItemDto.getQuantity(), price);
+        OrderItem orderItem = OrderItem.builder()
+                .item(item)
+                .quantity(requestItemDto.getQuantity())
+                .price(price).build();
 
         Order order = Order.createOrder(member, orderItem);
         orderRepository.save(order);

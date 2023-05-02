@@ -2,17 +2,23 @@ package self.prac.checkStock.item.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import self.prac.checkStock.global.utils.JwtUtil;
 import self.prac.checkStock.item.domain.Item;
 import self.prac.checkStock.item.domain.ItemCategory;
 import self.prac.checkStock.item.domain.ItemDto;
 import self.prac.checkStock.item.dto.RegisterItemDto;
+import self.prac.checkStock.item.dto.RequestItemDto;
 import self.prac.checkStock.item.repository.ItemCategoryRepository;
 import self.prac.checkStock.item.repository.ItemRepository;
 import self.prac.checkStock.item.service.ItemService;
+import self.prac.checkStock.member.domain.Member;
+import self.prac.checkStock.order.domain.Order;
+import self.prac.checkStock.order.service.OrderService;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +27,7 @@ public class ItemController {
     private final ItemService itemService;
     private final ItemRepository itemRepository;
     private final ItemCategoryRepository itemCategoryRepository;
+    private final OrderService orderService;
 
     @PostMapping("/register/item")
     public ResponseEntity<ItemDto> registerItem(@RequestBody RegisterItemDto item) {
@@ -51,5 +58,11 @@ public class ItemController {
         if(itemCategory == null) throw new IllegalArgumentException("물품분류 입력 필요");
         ItemCategory registeredItemCategory = itemService.registerItemCategory(itemCategory);
         return ResponseEntity.ok(registeredItemCategory);
+    }
+
+    @PostMapping
+    public ResponseEntity<Order> orderItem(@RequestBody RequestItemDto requestItemDto, @AuthenticationPrincipal Member member) {
+        Order order = orderService.registerOrder(requestItemDto, member);
+        return ResponseEntity.ok(order);
     }
 }

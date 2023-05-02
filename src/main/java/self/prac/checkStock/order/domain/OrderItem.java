@@ -1,5 +1,6 @@
 package self.prac.checkStock.order.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import self.prac.checkStock.item.domain.Item;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "order_item")
 @Getter
 @Setter
+@Builder
 public class OrderItem {
 
     @Id
@@ -41,10 +43,10 @@ public class OrderItem {
 
     //==creation method
     public static OrderItem createOrderItem(Item item, long quantity, long price) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
-        orderItem.setQuantity(quantity);
-        orderItem.setPrice(price);
+        OrderItem orderItem = OrderItem.builder()
+                .item(item)
+                .quantity(quantity)
+                .price(price).build();
         return orderItem;
     }
 }

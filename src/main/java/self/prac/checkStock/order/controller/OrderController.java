@@ -25,7 +25,7 @@ public class OrderController {
         Member loginMember = (Member)request.getSession().getAttribute("loginMember");
 
         itemService.checkQuantity(requestItemDto);
-        Order order = orderService.registOrder(requestItemDto, loginMember);
+        Order order = orderService.registerOrder(requestItemDto, loginMember);
 
         return ResponseEntity.ok(order);
     }
