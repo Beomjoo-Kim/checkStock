@@ -20,6 +20,7 @@ public class Order {
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
     private Member member;
 
     @OneToMany(mappedBy = "order")

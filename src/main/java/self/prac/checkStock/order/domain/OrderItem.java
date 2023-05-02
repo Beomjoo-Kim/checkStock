@@ -21,9 +21,11 @@ public class OrderItem {
     private long price;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "itemId")
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orderId")
     private Order order;
 
     //==association method

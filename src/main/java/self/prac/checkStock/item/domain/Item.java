@@ -33,7 +33,8 @@ public class Item {
     @Convert(converter = ItemStatusConverter.class)
     private ItemStatus itemStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "itemCategoryId")
     private ItemCategory itemCategory;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST)

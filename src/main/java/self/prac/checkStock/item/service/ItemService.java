@@ -35,7 +35,7 @@ public class ItemService {
         item.setPrice(registerItemDto.getPrice());
         item.setQuantity(registerItemDto.getQuantity());
         item.setSellYn(registerItemDto.getSellYn());
-        item.setItemCategory(registerItemDto.getItemCategory());
+        item.setItemCategory(searchedItemCategoryList.get(0));
         item.setItemStatus(ItemStatus.NORMAL);
 
         long id = itemRepository.save(item);
