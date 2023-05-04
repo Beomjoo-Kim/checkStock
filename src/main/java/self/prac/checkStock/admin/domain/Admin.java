@@ -21,7 +21,7 @@ public class Admin implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "adminId")
-    private long id;
+    private Long id;
 
     private String email;
     private String password;

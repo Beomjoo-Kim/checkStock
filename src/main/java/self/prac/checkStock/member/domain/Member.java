@@ -24,7 +24,7 @@ public class Member implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memberId")
-    private long id;
+    private Long id;
 
     private String password;
     private String name;

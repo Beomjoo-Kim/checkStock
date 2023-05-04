@@ -30,13 +30,13 @@ public class OrderItemRepositoryTestIt {
         Item item = new Item();
         item.setName("testItem");
 
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
+        OrderItem orderItem = OrderItem.builder().item(item).build();
 
         //when
-        long id = orderItemRepository.save(orderItem);
+        OrderItem savedOrderItem = orderItemRepository.save(orderItem);
         itemRepository.save(item);
-        OrderItem searchedOrderItem = orderItemRepository.findOne(id);
+        OrderItem searchedOrderItem = orderItemRepository.findById(savedOrderItem.getId())
+                .orElseThrow(() -> new IllegalArgumentException());
 
         //then
         assertThat(searchedOrderItem).isEqualTo(orderItem);
@@ -53,11 +53,9 @@ public class OrderItemRepositoryTestIt {
         item2.setName("testItem2");
         itemRepository.save(item2);
 
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
+        OrderItem orderItem = OrderItem.builder().item(item).build();
         orderItemRepository.save(orderItem);
-        OrderItem orderItem2 = new OrderItem();
-        orderItem2.setItem(item2);
+        OrderItem orderItem2 = OrderItem.builder().item(item2).build();
         orderItemRepository.save(orderItem2);
 
         Order order = new Order();

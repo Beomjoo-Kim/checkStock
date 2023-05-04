@@ -29,8 +29,9 @@ class AdminRepositoryTest {
         admin.setPassword("123");
 
         //when
-        long id = adminRepository.save(admin);
-        Admin searchedAdmin = adminRepository.findOne(id);
+        Admin savedAdmin = adminRepository.save(admin);
+        Admin searchedAdmin = adminRepository.findById(savedAdmin.getId())
+                .orElseThrow(() -> new IllegalArgumentException());
 
         //then
         assertThat(admin).isEqualTo(searchedAdmin);
@@ -56,8 +57,8 @@ class AdminRepositoryTest {
         //when
         List<Admin> searchedMemberList1 = adminRepository.findAll();
         List<Admin> searchedMemberList2 = adminRepository.findByEmail("asd1");
-        List<Admin> searchedMemberList3 = adminRepository.findByName("test");
-        List<Admin> searchedMemberList4 = adminRepository.findByName("testA");
+        List<Admin> searchedMemberList3 = adminRepository.findByNameContains("test");
+        List<Admin> searchedMemberList4 = adminRepository.findByNameContains("testA");
 
         //then
         assertThat(searchedMemberList1).contains(admin1, admin2);

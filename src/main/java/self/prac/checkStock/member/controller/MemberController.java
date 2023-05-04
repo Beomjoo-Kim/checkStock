@@ -53,24 +53,30 @@ public class MemberController {
     }
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<Member> member(@PathVariable Long memberId, HttpServletRequest request) {
-            return ResponseEntity.ok(memberRepository.findOne(memberId));
+    public Member member(@PathVariable Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("no member searched"));
     }
 
+    @Transactional
     @PostMapping("/kick/{memberId}")
-    public ResponseEntity<Member> kickMember(@PathVariable Long id) {
-        Member member = memberRepository.findOne(id);
+    public Member kickMember(@PathVariable Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("no member searched"));
         memberService.modifyStatus(member, MemberStatus.BANNED);
-        return ResponseEntity.ok(member);
+        return member;
     }
 
     @Transactional
     @PostMapping("/modify")
     public Member modifyMember(@RequestBody Member member) {
-        Member modifiedMember = memberRepository.findOne(member.getId());
         if (member.getName().isEmpty() || member.getPassword().isEmpty() || member.getPhone().isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("need new info");
         }
+
+        Member modifiedMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new IllegalArgumentException("no member searched"));
+
         modifiedMember.modifyMember(member.getName(), member.getPassword(), member.getPhone());
         return modifiedMember;
     }

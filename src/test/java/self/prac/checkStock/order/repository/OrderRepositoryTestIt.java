@@ -34,8 +34,9 @@ public class OrderRepositoryTestIt {
 
         //when
         memberRepository.save(member);
-        long id = orderRepository.save(order);
-        Order searchedOrder = orderRepository.findOne(id);
+        Order savedOrder = orderRepository.save(order);
+        Order searchedOrder = orderRepository.findById(savedOrder.getId())
+                .orElseThrow(() -> new IllegalArgumentException());
 
         //then
         assertThat(searchedOrder).isEqualTo(order);
@@ -48,7 +49,7 @@ public class OrderRepositoryTestIt {
         Member member = new Member("testEmail", "testMember", "testPw", "testPh");
         memberRepository.save(member);
 
-        OrderItem orderItem = new OrderItem();
+        OrderItem orderItem = OrderItem.builder().build();
         orderItemRepository.save(orderItem);
 
         Order order = new Order();
@@ -62,7 +63,7 @@ public class OrderRepositoryTestIt {
 
         //when
         List<Order> orderList1 = orderRepository.findByMember(member);
-        List<Order> orderList2 = orderRepository.findByOrderItem(orderItem);
+        List<Order> orderList2 = orderRepository.findByOrderItems(orderItem);
         List<Order> orderList3 = orderRepository.findAll();
 
         //then

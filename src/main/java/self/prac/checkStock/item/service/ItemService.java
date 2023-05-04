@@ -1,6 +1,7 @@
 package self.prac.checkStock.item.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.global.error.exception.CustomErrorCodes;
@@ -25,7 +26,7 @@ public class ItemService {
 
     @Transactional
     public Item registerItem(RegisterItemDto registerItemDto) {
-        List<ItemCategory> searchedItemCategoryList = itemCategoryRepository.findByName(registerItemDto.getItemCategory().getName());
+        List<ItemCategory> searchedItemCategoryList = itemCategoryRepository.findByNameContains(registerItemDto.getItemCategory().getName());
         if (searchedItemCategoryList == null || searchedItemCategoryList.size() != 1) {
             throw new IllegalArgumentException("물품 분류 필요");
         }
@@ -38,13 +39,13 @@ public class ItemService {
         item.setItemCategory(searchedItemCategoryList.get(0));
         item.setItemStatus(ItemStatus.NORMAL);
 
-        long id = itemRepository.save(item);
-        return item;
+        return itemRepository.save(item);
     }
 
     @Transactional
     public Item updateItem(long itemId, UpdateItemDto updateItemDto) {
-        Item updatedItem = itemRepository.findOne(itemId);
+        Item updatedItem = itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("no item found"));
         updatedItem.setName(updateItemDto.getName());
         updatedItem.setPrice(updateItemDto.getPrice());
         updatedItem.setQuantity(updateItemDto.getQuantity());
@@ -55,7 +56,8 @@ public class ItemService {
 
     @Transactional
     public Item requestItemRemove(long itemId, String reason) {
-        Item requestedItem = itemRepository.findOne(itemId);
+        Item requestedItem = itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("no item found"));
         requestedItem.setItemStatus(ItemStatus.WAITING_REMOVAL);
         requestedItem.setReason(reason);
         requestedItem.setRemoveRequestDate(new Date());
@@ -64,12 +66,13 @@ public class ItemService {
 
     @Transactional
     //delete / count
-    public long removeItem(Item item) {
-        return itemRepository.deleteItem(item);
+    public void removeItem(Item item) {
+        itemRepository.delete(item);
     }
 
     public void checkQuantity(RequestItemDto requestItemDto) {
-        Item requestedItem = itemRepository.findOne(requestItemDto.getItemId());
+        Item requestedItem = itemRepository.findById(requestItemDto.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("no item found"));
         if (requestedItem.getQuantity() < requestItemDto.getQuantity()) {
             throw new CustomRuntimeException(CustomErrorCodes.NOT_ENOUGH_STOCK);
         }
@@ -78,7 +81,7 @@ public class ItemService {
 
     @Transactional
     public ItemCategory registerItemCategory(ItemCategory itemCategory) {
-        List<ItemCategory> searchedItemCategoryList = itemCategoryRepository.findByName(itemCategory.getName());
+        List<ItemCategory> searchedItemCategoryList = itemCategoryRepository.findByNameContains(itemCategory.getName());
         if (searchedItemCategoryList != null && searchedItemCategoryList.size() > 0) {
             throw new IllegalArgumentException("이미 존재하는 물품 분류");
         }

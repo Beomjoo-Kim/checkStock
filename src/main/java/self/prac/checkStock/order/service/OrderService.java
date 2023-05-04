@@ -25,7 +25,9 @@ public class OrderService {
 
     @Transactional
     public Order registerOrder(RequestItemDto requestItemDto, Member member) {
-        Item item = itemRepository.findOne(requestItemDto.getItemId());
+        Item item = itemRepository.findById(requestItemDto.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("no item found"));
+
 
         //TODO : discount logic here later
         long price = item.getPrice();
@@ -43,14 +45,14 @@ public class OrderService {
 
     @Transactional
     public Order cancelOrder(long orderId) {
-        Order order = orderRepository.findOne(orderId);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("no order found"));
         order.setOrderStatus(OrderStatus.CANCELED);
         return order;
     }
 
     public List<Order> findOrders(Member member) {
-        List<Order> orderList = orderRepository.findByMember(member);
-        return orderList;
+        return orderRepository.findByMember(member);
     }
 
 }

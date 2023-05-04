@@ -28,8 +28,8 @@ public class memberRepositoryTestIT {
 
         //when
         memberRepository.save(member);
-        long id = member.getId();
-        Member searchedMember = memberRepository.findOne(id);
+        Long id = member.getId();
+        Member searchedMember = memberRepository.findById(id).get();
 
         //then
         assertThat(member).isEqualTo(searchedMember);
@@ -50,8 +50,8 @@ public class memberRepositoryTestIT {
         //when
         List<Member> searchedMemberList1 = memberRepository.findAll();
         List<Member> searchedMemberList2 = memberRepository.findByEmail("asd1");
-        List<Member> searchedMemberList3 = memberRepository.findByName("test");
-        List<Member> searchedMemberList4 = memberRepository.findByName("testA");
+        List<Member> searchedMemberList3 = memberRepository.findByNameContains("test");
+        List<Member> searchedMemberList4 = memberRepository.findByNameContains("testA");
 
         //then
         assertThat(searchedMemberList1).contains(member1, member2);

@@ -27,8 +27,9 @@ public class ItemCategoryRepositoryTestIt {
         itemCategory.setName("testItemCategory");
 
         //when
-        long id = itemCategoryRepository.save(itemCategory);
-        ItemCategory searchedItemCategory = itemCategoryRepository.findOne(id);
+        ItemCategory savedItemCategory = itemCategoryRepository.save(itemCategory);
+        ItemCategory searchedItemCategory = itemCategoryRepository.findById(savedItemCategory.getId())
+                .orElseThrow(() -> new IllegalArgumentException());
 
         //then
         assertThat(itemCategory).isEqualTo(searchedItemCategory);
@@ -45,16 +46,16 @@ public class ItemCategoryRepositoryTestIt {
 
         Item item = new Item();
         item.setItemCategory(itemCategory);
-        itemCategory.setItem(item);
+        itemCategory.addItem(item);
 
         //when
         itemRepository.save(item);
         itemCategoryRepository.save(itemCategory);
         itemCategoryRepository.save(itemCategory2);
-        List<ItemCategory> searchedItemCategoryList1 = itemCategoryRepository.findByName("testItemCategory");
+        List<ItemCategory> searchedItemCategoryList1 = itemCategoryRepository.findByNameContains("testItemCategory");
         List<ItemCategory> searchedItemCategoryList2 = itemCategoryRepository.findAll();
-        List<ItemCategory> searchedItemCategoryList3 = itemCategoryRepository.findByName("testItemCategory2");
-        ItemCategory searchedItemCategory = itemCategoryRepository.findByItem(item);
+        List<ItemCategory> searchedItemCategoryList3 = itemCategoryRepository.findByNameContains("testItemCategory2");
+        ItemCategory searchedItemCategory = itemCategoryRepository.findByItems(item);
 
         //then
         assertThat(searchedItemCategoryList1).contains(itemCategory, itemCategory2);

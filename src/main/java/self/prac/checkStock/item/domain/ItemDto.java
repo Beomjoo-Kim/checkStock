@@ -25,7 +25,7 @@ public class ItemDto {
     private Date removeRequestDate;
     private ItemStatus itemStatus;
     private long itemCategoryId;
-    private String itemCatregoryNm;
+    private String itemCategoryNm;
     private List<OrderItem> orderItems = new ArrayList<>();
 
 }
