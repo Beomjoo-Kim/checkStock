@@ -26,6 +26,6 @@ public class ItemDto {
     private ItemStatus itemStatus;
     private long itemCategoryId;
     private String itemCategoryNm;
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> orderItems;
 
 }

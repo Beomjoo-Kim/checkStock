@@ -39,7 +39,7 @@ public class ItemController {
         ItemDto itemDto = ItemDto.builder()
                 .itemStatus(registeredItem.getItemStatus())
                 .itemCategoryId(registeredItem.getItemCategory().getId())
-                .itemCatregoryNm(registeredItem.getItemCategory().getName())
+                .itemCategoryNm(registeredItem.getItemCategory().getName())
                 .id(registeredItem.getId())
                 .name(registeredItem.getName())
                 .detail(registeredItem.getDetail())

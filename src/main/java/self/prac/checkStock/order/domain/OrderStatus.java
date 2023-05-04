@@ -1,7 +1,5 @@
 package self.prac.checkStock.order.domain;
 
-import self.prac.checkStock.item.domain.ItemStatus;
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
