@@ -1,8 +1,6 @@
 package self.prac.checkStock.item.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import self.prac.checkStock.global.utils.JwtUtil;
 import self.prac.checkStock.item.domain.Item;

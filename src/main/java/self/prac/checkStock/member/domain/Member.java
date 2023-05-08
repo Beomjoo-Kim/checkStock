@@ -6,7 +6,6 @@ import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import self.prac.checkStock.global.security.Role;
 import self.prac.checkStock.order.domain.Order;
 
 import javax.persistence.*;

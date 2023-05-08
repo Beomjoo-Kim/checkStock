@@ -1,7 +1,6 @@
 package self.prac.checkStock.item.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.global.error.exception.CustomErrorCodes;
