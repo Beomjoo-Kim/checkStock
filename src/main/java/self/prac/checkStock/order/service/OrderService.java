@@ -27,7 +27,7 @@ public class OrderService {
     public Order registerOrder(RequestItemDto requestItemDto, Member member) {
         Item item = itemRepository.findById(requestItemDto.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("no item found"));
-
+        item.removeStock(requestItemDto.getQuantity());
 
         //TODO : discount logic here later
         long price = item.getPrice();
@@ -36,6 +36,7 @@ public class OrderService {
                 .item(item)
                 .quantity(requestItemDto.getQuantity())
                 .price(price).build();
+        orderItemRepository.save(orderItem);
 
         Order order = Order.createOrder(member, orderItem);
         orderRepository.save(order);
