@@ -61,8 +61,8 @@ public class ItemController {
 
     @PostMapping("/order")
     public OrderDto orderItem(@RequestBody RequestItemDto requestItemDto,
-                              @RequestHeader(value = "Authorization") String token) {
-        token = token.replaceAll("Bearer ","");
+                              @RequestHeader(value = "Authorization") String rawToken) {
+        String token = jwtUtil.extractToken(rawToken);
         String userEmail = jwtUtil.extractUserEmail(token);
         Member member = memberService.getMemberByEmail(userEmail);
         Order order = orderService.registerOrder(requestItemDto, member);

@@ -108,6 +108,10 @@ public class JwtUtil {
         return null;
     }
 
+    public String extractToken(String rawToken) {
+        return rawToken.replaceAll("Bearer ","");
+    }
+
     private Authentication getMemberAuthentication(String token) {
         Member member = memberService.getMemberByEmail(extractUserEmail(token));
         return new UsernamePasswordAuthenticationToken(member, "", member.getAuthorities());
