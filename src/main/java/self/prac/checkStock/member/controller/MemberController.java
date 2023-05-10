@@ -5,7 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import self.prac.checkStock.global.utils.JwtUtil;
+import self.prac.checkStock.global.domain.SignInResponse;
+import self.prac.checkStock.global.jwt.JwtUtil;
+import self.prac.checkStock.global.jwt.RefreshToken;
+import self.prac.checkStock.global.jwt.RefreshTokenRepository;
+import self.prac.checkStock.global.jwt.RefreshTokenService;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.global.domain.UserDto;
 import self.prac.checkStock.member.domain.MemberStatus;
@@ -24,12 +28,19 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final JwtUtil jwtUtil;
+    private final RefreshTokenService refreshTokenService;
 
     @GetMapping("/signIn")
-    public String signIn(@RequestBody Member member) {
+    public SignInResponse signIn(@RequestBody Member member) {
         Member signInMember = memberService.signIn(member);
         UserDto userDto = new UserDto(signInMember.getId(), signInMember.getName(), signInMember.getEmail(), signInMember.getRole());
-        return jwtUtil.generateToken(userDto);
+
+        //redis save
+        String accessToken = jwtUtil.generateToken(userDto);
+        String refreshToken = jwtUtil.generateRefreshToken();
+        refreshTokenService.saveTokenInfo(userDto, refreshToken);
+
+        return new SignInResponse(accessToken, refreshToken);
     }
 
     @GetMapping("/signOut")

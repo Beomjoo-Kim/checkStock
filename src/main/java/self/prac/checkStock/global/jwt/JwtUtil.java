@@ -1,4 +1,4 @@
-package self.prac.checkStock.global.utils;
+package self.prac.checkStock.global.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -47,6 +47,11 @@ public class JwtUtil {
         return createToken(claims, userDto.getId());
     }
 
+    public String generateRefreshToken() {
+        Claims claims = Jwts.claims();
+        return createRefreshToken(claims);
+    }
+
     private String createToken(Map<String, Object> claims, Long id) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + EXPIRATION_TIME);
@@ -58,6 +63,18 @@ public class JwtUtil {
                 .setExpiration(expiration)
                 .signWith(KEY)
                 .setHeaderParam("typ", "JWT")
+                .compact();
+    }
+
+    private String createRefreshToken(Claims claims) {
+        Date now = new Date();
+        Date expiration = new Date(now.getTime() + EXPIRATION_TIME);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(expiration)
+                .signWith(KEY)
                 .compact();
     }
 

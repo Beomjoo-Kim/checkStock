@@ -1,10 +1,9 @@
-package self.prac.checkStock.global.filter;
+package self.prac.checkStock.global.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
-import self.prac.checkStock.global.utils.JwtUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import self.prac.checkStock.admin.domain.Admin;
 import self.prac.checkStock.admin.repository.AdminRepository;
 import self.prac.checkStock.admin.service.AdminService;
-import self.prac.checkStock.global.utils.JwtUtil;
+import self.prac.checkStock.global.jwt.JwtUtil;
 import self.prac.checkStock.global.domain.UserDto;
 
 @RestController

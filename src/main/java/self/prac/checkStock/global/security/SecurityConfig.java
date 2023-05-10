@@ -1,4 +1,4 @@
-package self.prac.checkStock.global.config;
+package self.prac.checkStock.global.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,10 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import self.prac.checkStock.global.filter.JwtAuthenticationFilter;
-import self.prac.checkStock.global.utils.JwtUtil;
+import self.prac.checkStock.global.jwt.JwtAuthenticationFilter;
+import self.prac.checkStock.global.jwt.JwtUtil;
 
 @Slf4j
 @Configuration

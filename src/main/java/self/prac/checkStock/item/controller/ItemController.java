@@ -2,7 +2,7 @@ package self.prac.checkStock.item.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import self.prac.checkStock.global.utils.JwtUtil;
+import self.prac.checkStock.global.jwt.JwtUtil;
 import self.prac.checkStock.item.domain.Item;
 import self.prac.checkStock.item.domain.ItemCategory;
 import self.prac.checkStock.item.domain.ItemDto;
