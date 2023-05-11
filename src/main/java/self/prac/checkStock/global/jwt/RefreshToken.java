@@ -5,10 +5,12 @@ import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
+
 @Getter
 @RedisHash(value = "refreshToken", timeToLive = 60*60*24*3) //timeToLive 는 sec 단위
 @AllArgsConstructor
-public class RefreshToken {
+public class RefreshToken implements Serializable {
     @Id
     private String refreshToken;
 

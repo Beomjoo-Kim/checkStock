@@ -1,14 +1,14 @@
 package self.prac.checkStock.global.jwt;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import self.prac.checkStock.global.domain.SignInResponse;
 import self.prac.checkStock.global.domain.UserDto;
 
-@Controller
+import java.util.Map;
+import java.util.Objects;
+
+@RestController
 @RequestMapping("/api/token")
 @RequiredArgsConstructor
 public class JwtController {
@@ -19,8 +19,8 @@ public class JwtController {
 
 
     @PostMapping("/refresh")
-    public SignInResponse regenerateAccessToken(@RequestParam String token) {
-        RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(token)
+    public SignInResponse regenerateAccessToken(@RequestBody Map<String, Object> jsonObject) {
+        RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(Objects.toString(jsonObject.get("token")))
                 .orElseThrow(() -> new IllegalArgumentException("no such refreshToken"));
         UserDto userDto = new UserDto(refreshToken);
         String accessToken = jwtUtil.generateToken(userDto);
