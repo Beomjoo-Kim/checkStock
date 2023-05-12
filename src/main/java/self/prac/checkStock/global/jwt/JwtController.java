@@ -20,8 +20,8 @@ public class JwtController {
 
     @PostMapping("/refresh")
     public SignInResponse regenerateAccessToken(@RequestBody Map<String, Object> jsonObject) {
-        RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(Objects.toString(jsonObject.get("token")))
-                .orElseThrow(() -> new IllegalArgumentException("no such refreshToken"));
+        RefreshToken refreshToken = refreshTokenService.getRefreshToken(jsonObject);
+
         UserDto userDto = new UserDto(refreshToken);
         String accessToken = jwtUtil.generateToken(userDto);
         String newRefreshToken = jwtUtil.generateRefreshToken();

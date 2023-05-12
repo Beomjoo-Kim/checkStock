@@ -12,6 +12,10 @@ public enum CustomErrorCodes {
 
     //auth
     NO_AUTH("권한 없음"),
+
+    //token
+    TOKEN_NOT_FOUND("해당 토큰을 찾을 수 없음"),
+    TOKEN_EXPIRED("토큰 만료됨"),
     ;
 
     private String msg;
