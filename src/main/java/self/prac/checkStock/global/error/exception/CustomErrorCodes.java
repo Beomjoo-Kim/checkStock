@@ -9,6 +9,7 @@ public enum CustomErrorCodes {
     //item
     NOT_ENOUGH_STOCK("재고 부족"),
     NO_ITEM_CATEGORY("해당 물품 분류 없음"),
+    ITEM_NOT_FOUND("해당 물품 없음"),
 
     //auth
     NO_AUTH("권한 없음"),

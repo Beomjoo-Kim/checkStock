@@ -54,7 +54,7 @@ public class ItemController {
 
     @PostMapping("/register/category")
     public ItemCategory registerItemCategory(@RequestBody ItemCategory itemCategory) {
-        if(itemCategory == null) throw new IllegalArgumentException("물품분류 입력 필요");
+        if (itemCategory == null) throw new IllegalArgumentException("물품분류 입력 필요");
         ItemCategory registeredItemCategory = itemService.registerItemCategory(itemCategory);
         return registeredItemCategory;
     }
@@ -74,5 +74,10 @@ public class ItemController {
                 .build();
 
         return orderDto;
+    }
+
+    @PostMapping("/remove")
+    public void removeItem(@RequestBody ItemDto itemDto) {
+        itemService.requestRemoveItem(itemDto.getId(), itemDto.getReason());
     }
 }

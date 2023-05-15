@@ -16,6 +16,7 @@ import self.prac.checkStock.item.repository.ItemRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -64,9 +65,17 @@ public class ItemService {
     }
 
     @Transactional
-    //delete / count
-    public void removeItem(Item item) {
-        itemRepository.delete(item);
+    public void requestRemoveItem(Long itemId, String reason) {
+        Item searchedItem = itemRepository.findById(itemId)
+                .orElseThrow(() -> new CustomRuntimeException(CustomErrorCodes.ITEM_NOT_FOUND));
+        searchedItem.requestRemove(reason);
+    }
+
+    @Transactional
+    public void removeItem(Item item){
+        if (item.isRemoveRequestDateConfirmed()) {
+            itemRepository.delete(item);
+        }
     }
 
     public void checkQuantity(RequestItemDto requestItemDto) {

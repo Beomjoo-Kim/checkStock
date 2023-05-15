@@ -14,11 +14,4 @@ public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificat
     List<Item> findByNameContains(String name);
     List<Item> findBySellYnIgnoreCase(String sellYn);
 
-//    public List<Item> findZeroQuantity() {
-//        return jpaQueryFactory.selectFrom(item).where(item.quantity.eq(0L)).fetch();
-//    }
-//
-//    public long deleteItem(Item deleteItem) {
-//        return jpaQueryFactory.delete(item).where(item.id.eq(deleteItem.getId())).execute();
-//    }
 }
