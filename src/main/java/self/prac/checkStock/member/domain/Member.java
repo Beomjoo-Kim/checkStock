@@ -9,9 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import self.prac.checkStock.order.domain.Order;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "member")
@@ -30,6 +28,7 @@ public class Member implements UserDetails{
     private String email;
     private String role;
     private String phone;
+    private Date withdrawDate;
     @Convert(converter = MemberStatusConverter.class)
     private MemberStatus status;
     @OneToMany(mappedBy = "member")
@@ -60,10 +59,21 @@ public class Member implements UserDetails{
         this.role = role;
     }
 
+    public void setWithdrawDate(Date date) {
+        this.withdrawDate = date;
+    }
+
     public void modifyMember(String name, String password, String phone) {
         this.name = name;
         this.password = password;
         this.phone = phone;
+    }
+
+    public void requestWithdraw() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        this.withdrawDate = calendar.getTime();
+        this.status = MemberStatus.WITHDRAW;
     }
 
 

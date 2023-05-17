@@ -13,6 +13,7 @@ import self.prac.checkStock.global.error.exception.CustomErrorCodes;
 import self.prac.checkStock.global.error.exception.CustomRuntimeException;
 import self.prac.checkStock.member.repository.MemberRepository;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -70,4 +71,5 @@ public class MemberService implements UserDetailsService{
         }
         return memberList.get(0);
     }
+
 }

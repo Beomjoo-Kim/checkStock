@@ -1,7 +1,6 @@
 package self.prac.checkStock.member.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ import self.prac.checkStock.member.repository.MemberRepository;
 import self.prac.checkStock.member.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -41,15 +39,6 @@ public class MemberController {
         refreshTokenService.saveTokenInfo(userDto, refreshToken);
 
         return new SignInResponse(accessToken, refreshToken);
-    }
-
-    @GetMapping("/signOut")
-    @ResponseStatus(HttpStatus.OK)
-    public void signOut(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if (session != null) {
-            session.invalidate();
-        }
     }
 
     @PostMapping("/signUp")
@@ -90,5 +79,13 @@ public class MemberController {
 
         modifiedMember.modifyMember(member.getName(), member.getPassword(), member.getPhone());
         return modifiedMember;
+    }
+
+    @Transactional
+    @PostMapping("/withdraw")
+    public void requestWithdraw(@RequestBody Member member) {
+        Member searchedMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new IllegalArgumentException("no member searched"));
+        searchedMember.requestWithdraw();
     }
 }
