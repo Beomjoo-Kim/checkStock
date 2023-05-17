@@ -8,21 +8,23 @@ import self.prac.checkStock.global.error.exception.CustomRuntimeException;
 import self.prac.checkStock.item.domain.Item;
 import self.prac.checkStock.item.domain.ItemCategory;
 import self.prac.checkStock.item.domain.ItemStatus;
+import self.prac.checkStock.item.domain.RemovedItem;
 import self.prac.checkStock.item.dto.RegisterItemDto;
 import self.prac.checkStock.item.dto.RequestItemDto;
 import self.prac.checkStock.item.dto.UpdateItemDto;
 import self.prac.checkStock.item.repository.ItemCategoryRepository;
 import self.prac.checkStock.item.repository.ItemRepository;
+import self.prac.checkStock.item.repository.RemovedItemRepository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
     private final ItemCategoryRepository itemCategoryRepository;
+    private final RemovedItemRepository removedItemRepository;
 
     @Transactional
     public Item registerItem(RegisterItemDto registerItemDto) {
@@ -74,6 +76,13 @@ public class ItemService {
     @Transactional
     public void removeItem(Item item){
         if (item.isRemoveRequestDateConfirmed()) {
+            //removedItem table insert
+            RemovedItem removedItem = RemovedItem.builder()
+                    .name(item.getName())
+                    .itemCategory(item.getItemCategory())
+                    .build();
+            removedItemRepository.save(removedItem);
+
             itemRepository.delete(item);
         }
     }

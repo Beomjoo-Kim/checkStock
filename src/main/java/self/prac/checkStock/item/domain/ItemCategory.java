@@ -22,7 +22,14 @@ public class ItemCategory {
     @OneToMany(mappedBy = "itemCategory", cascade = CascadeType.PERSIST)
     private List<Item> items = new ArrayList<>();
 
+    @OneToMany(mappedBy = "itemCategory", cascade = CascadeType.PERSIST)
+    private List<RemovedItem> removedItems = new ArrayList<>();
+
     public void addItem(Item item) {
         this.items.add(item);
+    }
+
+    public void addRemovedItem(RemovedItem removedItem) {
+        this.removedItems.add(removedItem);
     }
 }

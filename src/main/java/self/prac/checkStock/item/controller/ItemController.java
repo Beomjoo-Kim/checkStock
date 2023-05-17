@@ -6,16 +6,20 @@ import self.prac.checkStock.global.jwt.JwtUtil;
 import self.prac.checkStock.item.domain.Item;
 import self.prac.checkStock.item.domain.ItemCategory;
 import self.prac.checkStock.item.domain.ItemDto;
+import self.prac.checkStock.item.domain.RemovedItem;
 import self.prac.checkStock.item.dto.RegisterItemDto;
 import self.prac.checkStock.item.dto.RequestItemDto;
 import self.prac.checkStock.item.repository.ItemCategoryRepository;
 import self.prac.checkStock.item.repository.ItemRepository;
+import self.prac.checkStock.item.repository.RemovedItemRepository;
 import self.prac.checkStock.item.service.ItemService;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.member.service.MemberService;
 import self.prac.checkStock.order.domain.Order;
 import self.prac.checkStock.order.domain.OrderDto;
 import self.prac.checkStock.order.service.OrderService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,9 +28,15 @@ public class ItemController {
     private final ItemService itemService;
     private final ItemRepository itemRepository;
     private final ItemCategoryRepository itemCategoryRepository;
+    private final RemovedItemRepository removedItemRepository;
     private final OrderService orderService;
     private final MemberService memberService;
     private final JwtUtil jwtUtil;
+
+    @GetMapping("/item")
+    public List<Item> getItemList(){
+        return itemRepository.findAll();
+    }
 
     @PostMapping("/register/item")
     public ItemDto registerItem(@RequestBody RegisterItemDto item) {
@@ -79,5 +89,10 @@ public class ItemController {
     @PostMapping("/remove")
     public void removeItem(@RequestBody ItemDto itemDto) {
         itemService.requestRemoveItem(itemDto.getId(), itemDto.getReason());
+    }
+
+    @GetMapping("/remove")
+    public List<RemovedItem> getRemovedItemList() {
+        return removedItemRepository.findAll();
     }
 }
