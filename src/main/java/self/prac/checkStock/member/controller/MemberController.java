@@ -63,7 +63,7 @@ public class MemberController {
     public Member kickMember(@PathVariable Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("no member searched"));
-        memberService.modifyStatus(member, MemberStatus.BANNED);
+        member.setStatus(MemberStatus.BANNED);
         return member;
     }
 

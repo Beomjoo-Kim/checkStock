@@ -130,7 +130,7 @@ public class JwtUtil {
     }
 
     private Authentication getMemberAuthentication(String token) {
-        Member member = memberService.getMemberByEmail(extractUserEmail(token));
+        Member member = (Member) memberService.loadUserByUsername(extractUserEmail(token));
         return new UsernamePasswordAuthenticationToken(member, "", member.getAuthorities());
     }
 

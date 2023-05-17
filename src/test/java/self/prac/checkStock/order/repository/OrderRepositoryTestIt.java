@@ -27,7 +27,12 @@ public class OrderRepositoryTestIt {
     @Transactional
     public void save() {
         //given
-        Member member = new Member("testEmail", "testMember", "testPw", "testPh");
+        Member member = Member.builder()
+                .email("testEmail")
+                .password("testPw")
+                .name("testMember")
+                .phone("testPh")
+                .build();
 
         Order order = new Order();
         order.setMember(member);
@@ -46,7 +51,12 @@ public class OrderRepositoryTestIt {
     @Transactional
     public void find() {
         //given
-        Member member = new Member("testEmail", "testMember", "testPw", "testPh");
+        Member member = Member.builder()
+                .email("testEmail")
+                .password("testPw")
+                .name("testMember")
+                .phone("testPh")
+                .build();
         memberRepository.save(member);
 
         OrderItem orderItem = OrderItem.builder().build();

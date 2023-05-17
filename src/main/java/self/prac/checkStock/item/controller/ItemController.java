@@ -74,7 +74,7 @@ public class ItemController {
                               @RequestHeader(value = "Authorization") String rawToken) {
         String token = jwtUtil.extractToken(rawToken);
         String userEmail = jwtUtil.extractUserEmail(token);
-        Member member = memberService.getMemberByEmail(userEmail);
+        Member member = (Member) memberService.loadUserByUsername(userEmail);
         Order order = orderService.registerOrder(requestItemDto, member);
 
         OrderDto orderDto = OrderDto.builder()

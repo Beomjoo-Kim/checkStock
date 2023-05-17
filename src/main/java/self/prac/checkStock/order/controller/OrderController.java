@@ -22,7 +22,7 @@ public class OrderController {
     public void findOrders(@RequestHeader(value = "Authorization") String rawToken) {
         String token = jwtUtil.extractToken(rawToken);
         String userEmail = jwtUtil.extractUserEmail(token);
-        Member member = memberService.getMemberByEmail(userEmail);
+        Member member = (Member) memberService.loadUserByUsername(userEmail);
 
     }
 }

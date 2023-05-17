@@ -1,5 +1,6 @@
 package self.prac.checkStock.member.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -15,7 +16,7 @@ import java.util.*;
 @Table(name = "member")
 @ToString
 @Getter
-@NoArgsConstructor
+@Builder
 public class Member implements UserDetails{
 
     @Id
@@ -33,19 +34,6 @@ public class Member implements UserDetails{
     private MemberStatus status;
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
-
-
-    public Member(String email, String name, String password) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-    }
-    public Member(String email, String name, String password, String phone) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-        this.phone = phone;
-    }
 
     public void setPhone(String phone) {
         this.phone = phone;

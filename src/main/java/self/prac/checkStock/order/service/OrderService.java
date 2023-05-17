@@ -52,8 +52,4 @@ public class OrderService {
         return order;
     }
 
-    public List<Order> findOrders(Member member) {
-        return orderRepository.findByMember(member);
-    }
-
 }

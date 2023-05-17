@@ -23,8 +23,13 @@ public class memberRepositoryTestIT {
     @Rollback(value = false)
     public void save() {
         //given
-        Member member = new Member("asd", "testA", "1234", "1234");
+        Member member = Member.builder()
+                .email("asd")
+                .name("testA")
+                .password("1234")
+                .build();
         member.setStatus(MemberStatus.WITHDRAW);
+
 
         //when
         memberRepository.save(member);
@@ -41,10 +46,19 @@ public class memberRepositoryTestIT {
     @Rollback
     public void find() {
         //given
-        Member member1 = new Member("asd1", "testA", "a1", "123");
+        Member member1 = Member.builder()
+                .email("asd1")
+                .password("testA")
+                .name("a1")
+                .build();
+
         memberRepository.save(member1);
 
-        Member member2 = new Member("asd2", "testB", "a2", "123");
+        Member member2 = Member.builder()
+                .email("asd2")
+                .password("testB")
+                .name("a2")
+                .build();
         memberRepository.save(member2);
 
         //when

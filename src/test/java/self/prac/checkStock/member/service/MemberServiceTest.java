@@ -25,15 +25,23 @@ public class MemberServiceTest {
     @Transactional
     public void signUp() {
         //given
-        Member member = new Member("testEmail@test.com", "testName", "testPw", "123");
-        Member member2 = new Member("testEmail@test.com", "testName2", "testPw2", "123");
+        Member member1 = Member.builder()
+                .email("testEmail@test.com")
+                .name("testName")
+                .password("testPw")
+                .build();
+        Member member2 = Member.builder()
+                .email("testEmail@test.com")
+                .name("testName2")
+                .password("testPw")
+                .build();
 
         //when
-        memberService.signUp(member);
-        Member searchedMemberByEmail = memberService.getMemberByEmail(member.getEmail());
+        memberService.signUp(member1);
+        Member searchedMemberByEmail = (Member) memberService.loadUserByUsername(member1.getEmail());
 
         //then
-        assertThat(searchedMemberByEmail).isEqualTo(member);
+        assertThat(searchedMemberByEmail).isEqualTo(member1);
         try {
             memberService.signUp(member2);
             fail();
@@ -47,12 +55,24 @@ public class MemberServiceTest {
     @Transactional
     public void signIn() {
         //given
-        Member member = new Member("testEmail@test.com", "testName", "testPw", "123");
-        memberService.signUp(member);
+        Member member1 = Member.builder()
+                .email("testEmail@test.com")
+                .name("testName")
+                .password("testPw")
+                .build();
+        memberService.signUp(member1);
 
         //when
-        Member incorrectMember = new Member("testEmail@test.com", "testName", "incorrectTestPw", "123");
-        Member member2 = new Member("testEmail@test.com", "testName", "testPw", "123");
+        Member incorrectMember = Member.builder()
+                .email("testEmail@test.com")
+                .name("testName")
+                .password("incorrectTestPw")
+                .build();
+        Member member2 = Member.builder()
+                .email("testEmail@test.com")
+                .name("testName")
+                .password("testPw")
+                .build();
 
         //then
         try {

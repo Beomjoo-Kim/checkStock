@@ -36,29 +36,13 @@ public class MemberService implements UserDetailsService{
         return isPasswordCorrect(member);
     }
 
-    //UserDetailsService 에서 사용되는 loadUserByUsername 와 로직이 동일하므로 수정필요
-    public Member getMemberByEmail(String email) {
-        List<Member> memberList = memberRepository.findByEmail(email);
-        if (memberList.isEmpty()) {
-            throw new CustomRuntimeException(CustomErrorCodes.NOT_SIGNED);
-        } else if (memberList.size() > 1) {
-            throw new CustomRuntimeException(CustomErrorCodes.OVER_SIGNED);
-        }
-        return memberList.get(0);
-    }
-
     @Transactional
     public Member isPasswordCorrect(Member member) {
-        Member searchedMember = getMemberByEmail(member.getEmail());
+        Member searchedMember = (Member) loadUserByUsername(member.getEmail());
         if (!searchedMember.getPassword().equals(member.getPassword())) {
             throw new CustomRuntimeException(CustomErrorCodes.INCORRECT_PASSWORD);
         }
         return searchedMember;
-    }
-
-    @Transactional
-    public void modifyStatus(Member member, MemberStatus status) {
-        member.setStatus(status);
     }
 
     @Override
