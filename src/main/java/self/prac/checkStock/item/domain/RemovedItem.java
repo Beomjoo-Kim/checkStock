@@ -15,6 +15,7 @@ public class RemovedItem {
     @Id
     private Long id;
     private String name;
+    private String reason;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "itemCategoryId")

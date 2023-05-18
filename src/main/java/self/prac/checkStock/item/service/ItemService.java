@@ -80,6 +80,7 @@ public class ItemService {
             RemovedItem removedItem = RemovedItem.builder()
                     .name(item.getName())
                     .itemCategory(item.getItemCategory())
+                    .reason(item.getReason())
                     .build();
             removedItemRepository.save(removedItem);
 
