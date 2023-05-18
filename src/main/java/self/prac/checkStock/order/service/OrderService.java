@@ -1,6 +1,7 @@
 package self.prac.checkStock.order.service;
 
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.item.domain.Item;
@@ -52,4 +53,7 @@ public class OrderService {
         return order;
     }
 
+    public List<Order> findOrderByStatus(OrderStatus orderStatus) {
+        return orderRepository.findByOrderStatus(orderStatus);
+    }
 }

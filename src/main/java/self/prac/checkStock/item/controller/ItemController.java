@@ -17,6 +17,7 @@ import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.member.service.MemberService;
 import self.prac.checkStock.order.domain.Order;
 import self.prac.checkStock.order.domain.OrderDto;
+import self.prac.checkStock.order.domain.OrderStatus;
 import self.prac.checkStock.order.service.OrderService;
 
 import java.util.List;
@@ -33,10 +34,12 @@ public class ItemController {
     private final MemberService memberService;
     private final JwtUtil jwtUtil;
 
-    @GetMapping("/item")
+    @GetMapping("/all")
     public List<Item> getItemList(){
         return itemRepository.findAll();
     }
+
+
 
     @PostMapping("/register/item")
     public ItemDto registerItem(@RequestBody RegisterItemDto item) {

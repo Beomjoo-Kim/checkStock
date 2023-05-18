@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import self.prac.checkStock.member.domain.Member;
 import self.prac.checkStock.order.domain.Order;
 import self.prac.checkStock.order.domain.OrderItem;
+import self.prac.checkStock.order.domain.OrderStatus;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByMember(Member member);
     List<Order> findByOrderItems(OrderItem orderItem);
+    List<Order> findByOrderStatus(OrderStatus orderStatus);
 }
