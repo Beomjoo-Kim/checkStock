@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,10 +30,12 @@ public class Member implements UserDetails{
     private String email;
     private String role;
     private String phone;
+    @Nullable
     private Date withdrawDate;
     @Convert(converter = MemberStatusConverter.class)
     private MemberStatus status;
     @OneToMany(mappedBy = "member")
+    @Builder.Default
     private List<Order> orders = new ArrayList<>();
 
     public void setPhone(String phone) {

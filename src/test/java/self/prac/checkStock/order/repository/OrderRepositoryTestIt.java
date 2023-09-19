@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import self.prac.checkStock.member.domain.Member;
+import self.prac.checkStock.member.domain.MemberStatus;
 import self.prac.checkStock.order.domain.Order;
 import self.prac.checkStock.order.domain.OrderItem;
 import self.prac.checkStock.member.repository.MemberRepository;
@@ -56,11 +57,13 @@ public class OrderRepositoryTestIt {
                 .password("testPw")
                 .name("testMember")
                 .phone("testPh")
+                .role("role")
+                .status(MemberStatus.NORMAL)
+                .withdrawDate(null)
                 .build();
         memberRepository.save(member);
 
         OrderItem orderItem = OrderItem.builder().build();
-        orderItemRepository.save(orderItem);
 
         Order order = new Order();
         order.setMember(member);
@@ -71,6 +74,7 @@ public class OrderRepositoryTestIt {
         order2.setMember(member);
         orderRepository.save(order2);
 
+        orderItemRepository.save(orderItem);
         //when
         List<Order> orderList1 = orderRepository.findByMember(member);
         List<Order> orderList2 = orderRepository.findByOrderItems(orderItem);

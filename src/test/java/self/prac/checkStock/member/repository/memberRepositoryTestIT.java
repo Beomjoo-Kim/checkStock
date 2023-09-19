@@ -64,8 +64,8 @@ public class memberRepositoryTestIT {
         //when
         List<Member> searchedMemberList1 = memberRepository.findAll();
         List<Member> searchedMemberList2 = memberRepository.findByEmail("asd1");
-        List<Member> searchedMemberList3 = memberRepository.findByNameContains("test");
-        List<Member> searchedMemberList4 = memberRepository.findByNameContains("testA");
+        List<Member> searchedMemberList3 = memberRepository.findByNameContains("a");
+        List<Member> searchedMemberList4 = memberRepository.findByNameContains("a1");
 
         //then
         assertThat(searchedMemberList1).contains(member1, member2);

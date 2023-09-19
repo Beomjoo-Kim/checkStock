@@ -3,7 +3,6 @@ package self.prac.checkStock.item.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 
